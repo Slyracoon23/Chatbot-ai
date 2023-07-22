@@ -26,10 +26,10 @@ export function Providers({ children, ...props }: ThemeProviderProps) {
       <WalletConnectModalAuth
         projectId={'ce5ddda2d7ebe0e88dd74bc3b54a2cf7'}
         metadata={{
-          name: 'My Dapp',
-          description: 'My Dapp description',
-          url: 'https://my-dapp.com',
-          icons: ['https://my-dapp.com/logo.png']
+          name: 'GraphID',
+          description: 'A Self-Sovereign Knowledge Graph',
+          url: 'https://graphid.vercel.app',
+          icons: ['https://graphid.vercel.app/logo.png']
         }}
       />
     </>
