@@ -16,7 +16,6 @@ export async function createTempAddress(handle: any, signer: any /*sdk: any*/) {
     identity: { name: 'jon' },
     tx: { query: { linkTo: 'the query link' } }
   }
-
   //   const { identity: user_cred, tx: params } = await sdk._createTempAddress(
   //   (await signer.getAddress()).toLowerCase(),
   //   null,
@@ -136,10 +135,10 @@ export async function signPayload(identity: any, public_key: any, signer: any) {
   //   .map((v: any) => v.replace("%SIG_BASE64%", base64))
   //   .join("\n")
   return {
-    signature: '', // base64,
-    uuid: '', //res.uuid,
-    created_at: '', // res.created_at,
-    tweet: ''
+    signature: 'base64sign', //base64,
+    uuid: 'uuiiiddd', //res.uuid,
+    created_at: 'some day', //res.created_at,
+    tweet: 'twwwwettt'
   }
 }
 
