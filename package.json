@@ -15,6 +15,7 @@
     "prettify": "npm run type-check && npm run lint:fix && npm run format:write"
   },
   "dependencies": {
+    "@ethereum-attestation-service/eas-sdk": "^0.29.1",
     "@nanostores/react": "github:ai/react",
     "@radix-ui/react-alert-dialog": "1.0.4",
     "@radix-ui/react-dialog": "1.0.4",
