@@ -14,7 +14,7 @@ import { IconGitHub, IconSpinner } from '@/components/ui/icons'
 
 export function LoginButton({
   text = 'Login with worldcoin',
-  showGithubIcon = true,
+  showGithubIcon = false, //true,
   // className,
   ...props
 }: any) {
