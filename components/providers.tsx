@@ -7,6 +7,7 @@ import { ThemeProviderProps } from 'next-themes/dist/types'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { WalletConnectModalAuth } from '@walletconnect/modal-auth-react'
 
+
 export function Providers({ children, ...props }: ThemeProviderProps) {
   return (
     <>
