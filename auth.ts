@@ -17,30 +17,28 @@ export const {
   CSRF_experimental // will be removed in future
 } = NextAuth({
   providers: [
-    // GitHub,
-    Auth02Provider({
-      id: 'worldcoin',
-      name: 'worldcoin',
-      wellKnown: 'https://id.worldcoin.org/.well-known/openid-configuration',
-      authorization: "https://id.worldcoin.org/authorize",
+    {
+      id: "worldcoin",
+      name: "Worldcoin",
+      type: "oauth",
+      wellKnown: "https://id.worldcoin.org/.well-known/openid-configuration",
+      authorization: { params: { scope: "openid" } },
+      // authorization: "https://id.worldcoin.org/authorize",
       issuer: 'https://id.worldcoin.org', 
-      clientId: 'app_ae12796fe25aa0e49f21304075b405a4',
-      clientSecret: 'sk_739db7c673a1732f7e29e8de22326d81364936d123891b88',
-      profile: profile => {
+      clientId: process.env.WLD_CLIENT_ID,
+      clientSecret: process.env.WLD_CLIENT_SECRET,
+      profile(profile) {
         return {
           id: profile.sub,
-          name: profile.name,
-          email: profile.email
+          name: profile.sub,
+          credentialType: profile["https://id.worldcoin.org/beta"].credential_type,
         }
-      }
-    })
+      },
+    },
   ],
   callbacks: {
-    jwt({ token, profile }) {
-      if (profile) {
-        token.id = profile.id
-        token.image = profile.picture
-      }
+     jwt({ token }) {
+      token.userRole = "admin"
       return token
     },
     authorized({ auth }) {
