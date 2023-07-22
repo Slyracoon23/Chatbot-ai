@@ -45,7 +45,8 @@
     "react-textarea-autosize": "^8.4.1",
     "reagraph": "^4.10.5",
     "remark-gfm": "^3.0.1",
-    "remark-math": "^5.1.1"
+    "remark-math": "^5.1.1",
+    "use-neo4j": "^0.3.13"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
