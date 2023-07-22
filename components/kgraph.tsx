@@ -23,12 +23,12 @@ export const KGraph = () => {
     // Run the queries when the component mounts
     runNodesQuery()
     runEdgesQuery()
-  }, [])
+  }, [runEdgesQuery, runNodesQuery])
 
   useEffect(() => {
     // Update the nodes state when the nodesRecords changes
     if (nodesRecords) {
-      const newNodes = nodesRecords.map(record => {
+      const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
         return { id: node.identity.toString(), label: node.labels[0] }
       })
@@ -39,7 +39,7 @@ export const KGraph = () => {
   useEffect(() => {
     // Update the edges state when the edgesRecords changes
     if (edgesRecords) {
-      const newEdges = edgesRecords.map(record => {
+      const newEdges: any = edgesRecords.map((record: any) => {
         const relationship = record.get('r')
         return {
           source: relationship.start.toString(),
