@@ -42,13 +42,12 @@ import {
 interface SidebarActionsProps {
   chat: Chat
   removeChat: (args: { id: string; path: string }) => ServerActionResult<void>
-  shareChat: (chat: Chat) => ServerActionResult<Chat>
+  // shareChat: (chat: Chat) => ServerActionResult<Chat>
 }
 
 export function SidebarActions({
   chat,
-  removeChat,
-  shareChat
+  removeChat // shareChat
 }: SidebarActionsProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
@@ -83,7 +82,7 @@ export function SidebarActions({
     <>
       <div className="space-x-1">
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <Button
               variant="ghost"
               className="h-6 w-6 p-0 hover:bg-background"
@@ -96,7 +95,7 @@ export function SidebarActions({
           <TooltipContent>Share chat</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <Button
               variant="ghost"
               className="h-6 w-6 p-0 hover:bg-background"

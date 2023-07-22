@@ -2,6 +2,7 @@
 
 import { useSignIn } from '@walletconnect/modal-auth-react'
 import { useState } from 'react'
+import { Button } from './ui/button'
 
 export function ConnectButton() {
   const [disabled, setDisabled] = useState(false)
@@ -19,9 +20,5 @@ export function ConnectButton() {
     }
   }
 
-  return (
-    <div onClick={onSignIn}>
-      Connect to WalletConnect
-    </div>
-  )
+  return <div onClick={onSignIn}>Connect to WalletConnect</div>
 }

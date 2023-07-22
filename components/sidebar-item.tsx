@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 import { type Chat } from '@/lib/types'
 import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
+// import { buttonVariants } from '@/components/ui/button'
 import { IconMessage, IconUsers } from '@/components/ui/icons'
 import {
   Tooltip,
@@ -43,11 +43,11 @@ export function SidebarItem({ chat, children }: SidebarItemProps) {
       </div>
       <Link
         href={chat.path}
-        className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'group w-full pl-8 pr-16',
-          isActive && 'bg-accent'
-        )}
+        // className={cn(
+        //   buttonVariants({ variant: 'ghost' }),
+        //   'group w-full pl-8 pr-16',
+        //   isActive && 'bg-accent'
+        // )}
       >
         <div
           className="relative max-h-5 flex-1 select-none overflow-hidden text-ellipsis break-all"

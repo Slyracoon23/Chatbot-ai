@@ -2,9 +2,8 @@ import * as React from 'react'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
-import { auth } from '@/auth'
 import { clearChats } from '@/app/actions'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Sidebar } from '@/components/sidebar'
 import { SidebarList } from '@/components/sidebar-list'
 import {
@@ -20,7 +19,7 @@ import { UserMenu } from '@/components/user-menu'
 import { LoginButton } from '@/components/login-button'
 
 export async function Header() {
-  const session = await auth()
+  const session = { user: null }
   return (
     <header className="sticky top-0 z-50 flex h-16 w-full shrink-0 items-center justify-between border-b bg-gradient-to-b from-background/10 via-background/50 to-background/80 px-4 backdrop-blur-xl">
       <div className="flex items-center">
@@ -46,7 +45,7 @@ export async function Header() {
           {session?.user ? (
             <UserMenu user={session.user} />
           ) : (
-            <Button variant="link" asChild className="-ml-2">
+            <Button>
               <Link href="/sign-in?callbackUrl=/">Login</Link>
             </Button>
           )}
@@ -57,7 +56,7 @@ export async function Header() {
           target="_blank"
           href="https://github.com/vercel/nextjs-ai-chatbot/"
           rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: 'outline' }))}
+          // className={cn(buttonVariants({ variant: 'outline' }))}
         >
           <IconGitHub />
           <span className="ml-2 hidden md:flex">GitHub</span>
@@ -65,7 +64,7 @@ export async function Header() {
         <a
           href="https://github.com/vercel/nextjs-ai-chatbot/"
           target="_blank"
-          className={cn(buttonVariants())}
+          // className={cn(buttonVariants())}
         >
           <IconVercel className="mr-2" />
           <span className="hidden sm:block">Deploy to Vercel</span>

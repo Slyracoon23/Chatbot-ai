@@ -1,13 +1,14 @@
 'use client'
+
 import React, { useEffect } from 'react'
-import { nanoid } from '@/lib/utils'
 import Spotlight from '@/components/spotlight'
 import { KGraph } from '@/components/kgraph'
 import { useReadCypher } from 'use-neo4j'
+import { ConnectButton } from '@/components/connect-button'
+
+export const runtime = 'edge'
 
 export default function IndexPage() {
-  const id = nanoid()
-
   const {
     loading: nodesLoading,
     records: nodesRecords,
@@ -24,6 +25,7 @@ export default function IndexPage() {
     // Run once when the component mounts
     runNodesQuery()
     runEdgesQuery()
+    // We can add these deps to make linter happy, anyway they will not change
   }, [runEdgesQuery, runNodesQuery])
 
   return (
@@ -35,6 +37,7 @@ export default function IndexPage() {
         edgesRecords={edgesRecords}
         edgesLoading={edgesLoading}
       />
+      <ConnectButton />
     </div>
   )
 }
