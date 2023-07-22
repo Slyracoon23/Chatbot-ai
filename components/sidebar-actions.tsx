@@ -138,27 +138,7 @@ export function SidebarActions({
                 {chat.sharePath}
               </Link>
             )}
-            <Button
-              disabled={isSharePending}
-              onClick={() => {
-                startShareTransition(async () => {
-                  if (chat.sharePath) {
-                    await new Promise(resolve => setTimeout(resolve, 500))
-                    copyShareLink(chat)
-                    return
-                  }
-
-                  const result = await shareChat(chat)
-
-                  if (result && 'error' in result) {
-                    toast.error(result.error)
-                    return
-                  }
-
-                  copyShareLink(result)
-                })
-              }}
-            >
+            <Button disabled={isSharePending} onClick={() => {}}>
               {isSharePending ? (
                 <>
                   <IconSpinner className="mr-2 animate-spin" />
@@ -184,28 +164,7 @@ export function SidebarActions({
             <AlertDialogCancel disabled={isRemovePending}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction
-              disabled={isRemovePending}
-              onClick={event => {
-                event.preventDefault()
-                startRemoveTransition(async () => {
-                  const result = await removeChat({
-                    id: chat.id,
-                    path: chat.path
-                  })
-
-                  if (result && 'error' in result) {
-                    toast.error(result.error)
-                    return
-                  }
-
-                  setDeleteDialogOpen(false)
-                  router.refresh()
-                  router.push('/')
-                  toast.success('Chat deleted')
-                })
-              }}
-            >
+            <AlertDialogAction disabled={isRemovePending} onClick={() => {}}>
               {isRemovePending && <IconSpinner className="mr-2 animate-spin" />}
               Delete
             </AlertDialogAction>
