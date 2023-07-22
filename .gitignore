@@ -38,3 +38,4 @@ yarn-error.log*
 .vscode
 .tsconfig.tsbuildinfo
 .env*.local
+tsconfig.tsbuildinfo

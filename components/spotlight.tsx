@@ -23,6 +23,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const worldcoinRef = useRef({ open: () => {} })
 

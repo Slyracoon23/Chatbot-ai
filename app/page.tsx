@@ -1,12 +1,12 @@
 'use client'
 
-import Spotlight from '@/components/spotlight'
-
-export const runtime = 'edge'
-
 import React, { useEffect } from 'react'
 import { KGraph } from '@/components/kgraph'
 import { useReadCypher } from 'use-neo4j'
+import { ConnectButton } from '@/components/connect-button'
+import Spotlight from '@/components/spotlight'
+
+export const runtime = 'edge'
 
 export default function IndexPage() {
   const {
@@ -36,6 +36,7 @@ export default function IndexPage() {
         edgesRecords={edgesRecords}
         edgesLoading={edgesLoading}
       />
+      <ConnectButton />
     </div>
   )
 }

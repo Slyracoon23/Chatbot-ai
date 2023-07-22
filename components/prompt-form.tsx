@@ -2,7 +2,7 @@ import { UseChatHelpers } from 'ai/react'
 import * as React from 'react'
 import Textarea from 'react-textarea-autosize'
 
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
 import {
   Tooltip,
@@ -49,21 +49,21 @@ export function PromptForm({
     >
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
         <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              onClick={e => {
+          <TooltipTrigger>
+            <Button
+              onClick={(e: any) => {
                 e.preventDefault()
                 router.refresh()
                 router.push('/')
               }}
-              className={cn(
-                buttonVariants({ size: 'sm', variant: 'outline' }),
-                'absolute left-0 top-4 h-8 w-8 rounded-full bg-background p-0 sm:left-4'
-              )}
+              // className={cn(
+              //   buttonVariants({ size: 'sm', variant: 'outline' }),
+              //   'absolute left-0 top-4 h-8 w-8 rounded-full bg-background p-0 sm:left-4'
+              // )}
             >
               <IconPlus />
               <span className="sr-only">New Chat</span>
-            </button>
+            </Button>
           </TooltipTrigger>
           <TooltipContent>New Chat</TooltipContent>
         </Tooltip>
@@ -80,7 +80,7 @@ export function PromptForm({
         />
         <div className="absolute right-0 top-4 sm:right-4">
           <Tooltip>
-            <TooltipTrigger asChild>
+            <TooltipTrigger>
               <Button
                 type="submit"
                 size="icon"

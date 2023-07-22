@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 
 export function ConnectButton() {
   const [disabled, setDisabled] = useState(false)
-  const { signIn } = useSignIn({ statement: 'Sign In to My Dapp' })
+  const { signIn } = useSignIn({ statement: 'Sign In to GraphID' })
 
   async function onSignIn() {
     try {
