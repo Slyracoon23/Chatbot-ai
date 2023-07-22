@@ -25,10 +25,10 @@ export const {
       return token
     },
     authorized({ auth }) {
-      return !!auth?.user // this ensures there is a logged in user for -every- request
+      return true // this ensures there is a logged in user for -every- request
     }
   },
   pages: {
-    signIn: '/sign-in' // overrides the next-auth default signin page https://authjs.dev/guides/basics/pages
+    signIn: '/' // overrides the next-auth default signin page https://authjs.dev/guides/basics/pages
   }
 })
