@@ -6,11 +6,39 @@ import { useState, useEffect } from "react";
 import CommandPalette, { filterItems, getItemIndex } from "react-cmdk-dark";
 import SismoConnect from '@/components/sismo-connect';
 import { ConnectButton } from '@/components/connect-button';
+import { createDriver } from 'use-neo4j'
+import { createNode } from '../services/neo4j'
 
 const Spotlight = () => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
+
+
+const driver = createDriver(
+  'neo4j+s',
+  '008a57cc.databases.neo4j.io',
+  7687,
+  'neo4j',
+  'r5a9crFqtc0kqnioMrMcNZyZyIJ4plwmizIK8Hl-zUg'
+)
+
+interface NodeProps {
+  id: number;
+  name: string;
+  skills: string;
+  email: string;
+}
+
+
+  const label = 'Employees';
+  const data = {
+    id: 13,
+    name: 'Bob',
+    skills: 'none',
+    email: 'bob.com',
+    companyId: 5,
+  };
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -51,6 +79,7 @@ const Spotlight = () => {
               />
             ),
             onClick: () => {
+              createNode(label, data)
             }
           },
           {
