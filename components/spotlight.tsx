@@ -1,7 +1,7 @@
 'use client'
 import 'react-cmdk-dark/dist/cmdk.css'
 import Image from 'next/image'
-import { useState, useCallback, useEffect,useRef} from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 // @ts-ignore
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
 import SismoConnect from '@/components/sismo-connect'
@@ -22,21 +22,18 @@ interface NodeProps {
   email: string
 }
 
-const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
+const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
 
+  const worldcoinRef = useRef({ open: () => {} })
 
-
-  const worldcoinRef = useRef({ open: () => {} });
-
-
-  const widgetChildren = useCallback(({ open }:any) => {
-    worldcoinRef.current.open = open;
-    return null; // Here you are returning null, you could also return a React element if needed.
-  }, []);
+  const widgetChildren = useCallback(({ open }: any) => {
+    worldcoinRef.current.open = open
+    return null // Here you are returning null, you could also return a React element if needed.
+  }, [])
 
   // useEffect(() => {
   //   if (worldcoinModalOpen) {
@@ -44,18 +41,16 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
   //   }
   // }, [worldcoinModalOpen]);
 
-  const handleWorldcoinSuccess = (data:any) => {
+  const handleWorldcoinSuccess = (data: any) => {
     console.log(data)
     // handle successful Worldcoin verification here
     setWorldcoinModalOpen(false)
   }
 
-  const handleWorldcoinVerify = (data:any) => {
+  const handleWorldcoinVerify = (data: any) => {
     console.log(data)
     // handle Worldcoin proof receipt here
   }
-
-
 
   const cypher = `
   CREATE (u:User {id: $userId, name: $userName})
@@ -179,7 +174,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
             ),
             onClick: () => {
               debugger
-              worldcoinRef.current.open();
+              worldcoinRef.current.open()
             }
           },
           {
@@ -287,22 +282,20 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
         </CommandPalette.Page>
       </CommandPalette>
       <Worldcoin />
-        <IDKitWidget
-          ref={worldcoinRef}
-          app_id="app_ae12796fe25aa0e49f21304075b405a4"
-          action="monstor-proof"
-          onSuccess={handleWorldcoinSuccess}
-          handleVerify={handleWorldcoinVerify}
-          //@ts-ignore
-          credential_types={['orb', 'phone']}
-          enableTelemetry
-        >
+      <IDKitWidget
+        ref={worldcoinRef}
+        app_id="app_ae12796fe25aa0e49f21304075b405a4"
+        action="monstor-proof"
+        onSuccess={handleWorldcoinSuccess}
+        handleVerify={handleWorldcoinVerify}
+        //@ts-ignore
+        credential_types={['orb', 'phone']}
+        enableTelemetry
+      >
         {widgetChildren as any}
-
-        </IDKitWidget>
+      </IDKitWidget>
     </>
   )
 }
-
 
 export default Spotlight

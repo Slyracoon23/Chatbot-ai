@@ -24,7 +24,7 @@ export default function IndexPage() {
     // Run once when the component mounts
     runNodesQuery()
     runEdgesQuery()
-  }, [])
+  }, [runEdgesQuery, runNodesQuery])
 
   return (
     <div className="flex-row justify-around align-middle">
