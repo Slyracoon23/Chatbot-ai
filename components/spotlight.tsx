@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import CommandPalette, { filterItems, getItemIndex } from "react-cmdk-dark";
 import SismoConnect from '@/components/sismo-connect';
 import { ConnectButton } from '@/components/connect-button';
+import { LoginButton } from "./login-button";
 
 const Spotlight = () => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
@@ -51,6 +52,23 @@ const Spotlight = () => {
               />
             ),
             onClick: () => {
+            }
+          },
+          {
+            id: 'worldcoin',
+            children: 'Connect to Worldcoin' ,
+            icon: () => (
+
+              <Image
+                src="/icon-worldcoin.svg"
+                width="40"
+                height="40"
+                alt="worldcoin"
+              />
+            ),
+            onClick: () => {
+              
+
             }
           },
           {
