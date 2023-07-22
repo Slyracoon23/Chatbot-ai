@@ -25,6 +25,17 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png'
+  },
+  metadataBase: new URL('https://graphid.vercel.app/'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+      'de-DE': '/de-DE'
+    }
+  },
+  openGraph: {
+    images: '/og-image.png'
   }
 }
 

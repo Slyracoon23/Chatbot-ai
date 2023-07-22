@@ -13,7 +13,7 @@ interface LoginButtonProps extends ButtonProps {
 }
 
 export function LoginButton({
-  text = 'Login with GitHub',
+  text = 'Login with worldcoin',
   showGithubIcon = true,
   className,
   ...props
@@ -25,7 +25,7 @@ export function LoginButton({
       onClick={() => {
         setIsLoading(true)
         // next-auth signIn() function doesn't work yet at Edge Runtime due to usage of BroadcastChannel
-        signIn('github', { callbackUrl: `/` })
+        signIn('worldcoin')
       }}
       disabled={isLoading}
       className={cn(className)}
