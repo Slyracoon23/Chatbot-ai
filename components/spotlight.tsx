@@ -4,15 +4,12 @@ import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef } from 'react'
 // @ts-ignore
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
+// @ts-ignore
+import { IDKitWidget } from '@worldcoin/idkit'
 import SismoConnect from '@/components/sismo-connect'
 import { ConnectButton } from '@/components/connect-button'
 import Worldcoin from '@/components/worldcoin'
-import { IDKitWidget } from '@worldcoin/idkit'
-import { createDriver } from 'use-neo4j'
-import { useWriteCypher } from 'use-neo4j'
-import { EOF } from 'dns'
 import { useLazyWriteCypher } from 'use-neo4j'
-// import { createNode } from '../services/neo4j'
 
 interface NodeProps {
   id: number
@@ -40,14 +37,12 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   //   }
   // }, [worldcoinModalOpen]);
 
- 
   const handleWorldcoinSuccess = (data: any) => {
     console.log(data)
     // handle successful Worldcoin verification here
     setWorldcoinModalOpen(false)
 
-    handleWorldcoinSubmit();
-
+    handleWorldcoinSubmit()
   }
 
   const handleWorldcoinVerify = (data: any) => {
@@ -55,8 +50,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
     // handle Worldcoin proof receipt here
     // Define Cypher query for connecting user with Worldcoin entity
 
-    handleWorldcoinSubmit();
-
+    handleWorldcoinSubmit()
   }
 
   const cypherWorldcoin = `
@@ -71,9 +65,8 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
     { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
   ] = useLazyWriteCypher(cypherWorldcoin)
 
-
   useEffect(() => {
-    if (window.location.href?.includes('sismoConnectResponse')){
+    if (window.location.href?.includes('sismoConnectResponse')) {
       setSearch('sismo')
       setIsOpen(true)
     }
@@ -113,7 +106,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         // Handle the error...
       })
   }
-  const handleSismoSubmit = (params:any) => {
+  const handleSismoSubmit = (params: any) => {
     // Run the query.
     runQuerySismo(params)
       .then(res => {
@@ -131,8 +124,8 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const handleWorldcoinSubmit = () => {
     // Define Cypher query for connecting user with Worldcoin entity
 
-     // Define parameters for the Cypher query
-     const worldcoinParams = {
+    // Define parameters for the Cypher query
+    const worldcoinParams = {
       userId: 'Earl', // replace this with the actual user ID
       worldcoinId: 1 // replace this with the actual Worldcoin ID
     }
@@ -150,9 +143,6 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         // Handle the error...
       })
   }
-
-
-
 
   const handleClick = (id: string) => {
     switch (id) {
@@ -246,14 +236,12 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
             ),
             onClick: () => {
               worldcoinRef.current.open()
-
             }
           },
           {
             id: 'worldcoin',
-            children: 'Connect to Worldcoin' ,
+            children: 'Connect to Worldcoin',
             icon: () => (
-
               <Image
                 src="/icon-worldcoin.svg"
                 width="40"
@@ -261,10 +249,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
                 alt="worldcoin"
               />
             ),
-            onClick: () => {
-              
-
-            }
+            onClick: () => {}
           },
           {
             id: 'walletconnect',
@@ -314,9 +299,15 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         id: 'commands',
         items: [
           {
-            id: "sismo",
+            id: 'sismo',
             keywords: ['Prove with Sismo'],
-            children: <SismoConnect setSearch={setSearch} setIsOpen={setIsOpen} handleSubmit={handleSismoSubmit} />,
+            children: (
+              <SismoConnect
+                setSearch={setSearch}
+                setIsOpen={setIsOpen}
+                handleSubmit={handleSismoSubmit}
+              />
+            ),
             icon: () => (
               <Image
                 src="/icon-sismo.svg"
