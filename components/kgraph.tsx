@@ -14,10 +14,14 @@ import {
 } from 'reagraph'
 import { useReadCypher } from 'use-neo4j'
 
-import { CardDemo} from '@/components/card-kgraph';
+import { CardDemo } from '@/components/card-kgraph'
 
-
-export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }:any) => {
+export const KGraph = ({
+  nodesLoading,
+  nodesRecords,
+  edgesLoading,
+  edgesRecords
+}: any) => {
   const graphRef = useRef<GraphCanvasRef | null>(null)
 
   const [nodes, setNodes] = useState([])
@@ -55,7 +59,10 @@ export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
-        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}` }
+        return {
+          id: node.identity.toString(),
+          label: `${node.labels[0]}-${node.identity.toString()}`
+        }
       })
       setNodes(newNodes)
     }
@@ -105,11 +112,13 @@ export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }
         onNodeClick={onNodeClick}
         // cameraMode="rotate"
         renderNode={({ node, ...rest }) => (
-          <SphereWithIcon {...rest} node={node} image={node.icon || '/kartek.png'} />
+          <SphereWithIcon
+            {...rest}
+            node={node}
+            image={node.icon || '/kartek.png'}
+          />
         )}
-        contextMenu={({ data, onClose }) => (
-          <CardDemo/>
-        )}
+        contextMenu={({ data, onClose }) => <CardDemo />}
       />
     </div>
   )
