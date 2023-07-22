@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useState, useEffect } from 'react'
 import { GraphCanvas, SphereWithIcon } from 'reagraph'
 import { useReadCypher } from 'use-neo4j'
@@ -53,9 +53,9 @@ export const KGraph = () => {
 
   return (
     <div>
-      <GraphCanvas 
-        nodes={nodes} 
-        edges={edges} 
+      <GraphCanvas
+        nodes={nodes}
+        edges={edges}
         renderNode={({ node, ...rest }) => (
           <SphereWithIcon
             {...rest}

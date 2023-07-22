@@ -9,7 +9,6 @@ import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 
-
 import { Neo4jContextProvider } from '@/components/neo4j-provider'
 
 export const metadata: Metadata = {
@@ -47,12 +46,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Toaster />
         <Providers attribute="class" defaultTheme="system" enableSystem>
           <Neo4jContextProvider>
-          <div className="flex flex-col min-h-screen">
-            {/* @ts-ignore */}
-            <Header />
-            <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
-          </div>
-          <TailwindIndicator />
+            <div className="flex min-h-screen flex-col">
+              {/* @ts-ignore */}
+              <Header />
+              <main className="flex flex-1 flex-col bg-muted/50">
+                {children}
+              </main>
+            </div>
+            <TailwindIndicator />
           </Neo4jContextProvider>
         </Providers>
       </body>
