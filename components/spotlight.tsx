@@ -4,6 +4,7 @@ import Image from 'next/image';
 import CommandPalette, { filterItems, getItemIndex } from "react-cmdk";
 import { useState, useEffect } from "react";
 
+
 const Spotlight = () => {
   const [page, setPage] = useState<"root" | "projects">("root");
   const [open, setOpen] = useState<boolean>(true);
