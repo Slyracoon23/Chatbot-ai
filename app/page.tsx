@@ -1,7 +1,5 @@
 import { nanoid } from '@/lib/utils'
-import { Chat } from '@/components/chat'
-import Spotlight from '@/components/spotlight'
-import { ConnectButton } from '@/components/connect-button'
+import Spotlight from '@/components/spotlight';
 
 export const runtime = 'edge'
 
@@ -11,7 +9,6 @@ export default function IndexPage() {
   return (
     <div className="flex-row justify-around align-middle">
       <Spotlight />
-      <ConnectButton />
     </div>
   )
 }

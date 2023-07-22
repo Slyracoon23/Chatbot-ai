@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { GraphCanvas, SphereWithIcon } from 'reagraph'
+import { GraphCanvas } from 'reagraph'
 import { useReadCypher } from 'use-neo4j'
 
 export const KGraph = () => {
@@ -19,12 +19,23 @@ export const KGraph = () => {
     run: runEdgesQuery
   } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 10')
 
-  useEffect(() => {
-    runNodesQuery()
-    runEdgesQuery()
-  }, [runEdgesQuery, runNodesQuery])
 
   useEffect(() => {
+    // Run the edges query when the component mounts and every minute afterwards
+    const intervalId = setInterval(() => {
+      runNodesQuery()
+      runEdgesQuery()
+    }, 60000) // Run every minute (60000 milliseconds)
+
+    return () => {
+      // Clear the interval when the component unmounts
+      clearInterval(intervalId)
+    }
+  }, [])
+
+
+  useEffect(() => {
+    // Update the nodes state when the nodesRecords changes
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
@@ -35,6 +46,7 @@ export const KGraph = () => {
   }, [nodesRecords])
 
   useEffect(() => {
+    // Update the edges state when the edgesRecords changes
     if (edgesRecords) {
       const newEdges: any = edgesRecords.map((record: any) => {
         const relationship = record.get('r')
@@ -53,17 +65,7 @@ export const KGraph = () => {
 
   return (
     <div>
-      <GraphCanvas
-        nodes={nodes}
-        edges={edges}
-        renderNode={({ node, ...rest }) => (
-          <SphereWithIcon
-            {...rest}
-            node={node}
-            image={node.icon || '/twitter.png'}
-          />
-        )}
-      />
+      <GraphCanvas nodes={nodes} edges={edges} />
     </div>
   )
 }
