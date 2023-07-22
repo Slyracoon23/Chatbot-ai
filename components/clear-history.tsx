@@ -46,23 +46,7 @@ export function ClearHistory({ clearChats }: ClearHistoryProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            disabled={isPending}
-            onClick={event => {
-              event.preventDefault()
-              startTransition(async () => {
-                const result = await clearChats()
-
-                if (result && 'error' in result) {
-                  toast.error(result.error)
-                  return
-                }
-
-                setOpen(false)
-                router.push('/')
-              })
-            }}
-          >
+          <AlertDialogAction disabled={isPending} onClick={() => {}}>
             {isPending && <IconSpinner className="mr-2 animate-spin" />}
             Delete
           </AlertDialogAction>
