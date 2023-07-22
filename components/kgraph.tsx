@@ -1,6 +1,6 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react'
-import { GraphCanvas } from 'reagraph'
+import { GraphCanvas, SphereWithIcon } from 'reagraph'
 import { useReadCypher } from 'use-neo4j'
 
 export const KGraph = () => {
@@ -20,13 +20,11 @@ export const KGraph = () => {
   } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 10')
 
   useEffect(() => {
-    // Run the queries when the component mounts
     runNodesQuery()
     runEdgesQuery()
   }, [runEdgesQuery, runNodesQuery])
 
   useEffect(() => {
-    // Update the nodes state when the nodesRecords changes
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
@@ -37,7 +35,6 @@ export const KGraph = () => {
   }, [nodesRecords])
 
   useEffect(() => {
-    // Update the edges state when the edgesRecords changes
     if (edgesRecords) {
       const newEdges: any = edgesRecords.map((record: any) => {
         const relationship = record.get('r')
@@ -56,7 +53,17 @@ export const KGraph = () => {
 
   return (
     <div>
-      <GraphCanvas nodes={nodes} edges={edges} />
+      <GraphCanvas 
+        nodes={nodes} 
+        edges={edges} 
+        renderNode={({ node, ...rest }) => (
+          <SphereWithIcon
+            {...rest}
+            node={node}
+            image={node.icon || '/twitter.png'}
+          />
+        )}
+      />
     </div>
   )
 }
