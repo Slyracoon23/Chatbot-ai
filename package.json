@@ -45,7 +45,7 @@
     "openai-edge": "^0.5.1",
     "pino-pretty": "^10.1.0",
     "react": "^18.2.0",
-    "react-cmdk-dark": "^1.0.3",
+    "react-cmdk-dark": "^1.0.5",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-intersection-observer": "^9.4.4",
