@@ -6,18 +6,19 @@ import { useReadCypher } from 'use-neo4j'
 export const KGraph = () => {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
-
+  console.log(nodes)
+  console.log(edges)
   const {
     loading: nodesLoading,
     records: nodesRecords,
     run: runNodesQuery
-  } = useReadCypher('MATCH (n) RETURN n LIMIT 10')
+  } = useReadCypher('MATCH (n) RETURN n LIMIT 30')
 
   const {
     loading: edgesLoading,
     records: edgesRecords,
     run: runEdgesQuery
-  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 10')
+  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 30')
 
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export const KGraph = () => {
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
-        return { id: node.identity.toString(), label: node.labels[0] }
+        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}` }
       })
       setNodes(newNodes)
     }
