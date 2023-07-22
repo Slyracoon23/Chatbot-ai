@@ -2,13 +2,13 @@
 import "react-cmdk-dark/dist/cmdk.css";
 import Image from 'next/image';
 import { useState, useEffect } from "react";
+// @ts-ignore
 import CommandPalette, { filterItems, getItemIndex } from "react-cmdk-dark";
 import SismoConnect from '@/components/sismo-connect';
 import { ConnectButton } from '@/components/connect-button';
 
 const Spotlight = () => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
-  const [open, setOpen] = useState<boolean>(true)
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -54,8 +54,8 @@ const Spotlight = () => {
             }
           },
           {
-            id: 'worldcoin',
-            children: 'Connect to Worldcoin',
+            id: 'walletconnect',
+            children: <ConnectButton />,
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),
@@ -133,9 +133,9 @@ const Spotlight = () => {
     >
       <CommandPalette.Page id="root">
         {filteredItems.length ? (
-          filteredItems.map(list => (
+          filteredItems.map((list :any) => (
             <CommandPalette.List key={list.id} heading={list.heading}>
-              {list.items.map(({ id, ...rest }) => (
+              {list.items.map(({ id, ...rest }: any) => (
                 <CommandPalette.ListItem
                   key={id}
                   index={getItemIndex(filteredItems, id)}

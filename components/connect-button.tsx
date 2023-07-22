@@ -21,7 +21,7 @@ export function ConnectButton() {
 
   return (
     <button onClick={onSignIn} disabled={disabled}>
-      Sign In
+      Connect to WalletConnect
     </button>
   )
 }
