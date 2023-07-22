@@ -63,7 +63,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [
     runWorldcoinQuery,
     { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
-  ] = useLazyWriteCypher(cypherWorldcoin)
+  ] = useLazyWriteCypher(cypherWorldcoin) as any
 
   useEffect(() => {
     if (window.location.href?.includes('sismoConnectResponse')) {
@@ -132,13 +132,13 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
 
     // Run the Cypher query
     runWorldcoinQuery(worldcoinParams)
-      .then(res => {
+      .then((res: any) => {
         console.log(res)
         // Handle the result...
         runNodesQuery()
         runEdgesQuery()
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.error(err)
         // Handle the error...
       })
@@ -235,6 +235,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
               />
             ),
             onClick: () => {
+              // debugger
               worldcoinRef.current.open()
             }
           },
