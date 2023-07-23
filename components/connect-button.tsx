@@ -2,6 +2,7 @@
 
 import { useSignIn } from '@walletconnect/modal-auth-react'
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 
 export function ConnectButton() {
   const [disabled, setDisabled] = useState(false)
@@ -20,8 +21,8 @@ export function ConnectButton() {
   }
 
   return (
-    <button onClick={onSignIn} disabled={disabled}>
+    <Button variant={'roundedOutline'} onClick={onSignIn} disabled={disabled} className={'hover:border-green-500'} >
       Sign In
-    </button>
+    </Button>
   )
 }
