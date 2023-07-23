@@ -1,40 +1,53 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { GraphCanvas, SphereWithIcon } from 'reagraph'
+import { GraphCanvas } from 'reagraph'
 import { useReadCypher } from 'use-neo4j'
 
 export const KGraph = () => {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
-
+  console.log(nodes)
+  console.log(edges)
   const {
     loading: nodesLoading,
     records: nodesRecords,
     run: runNodesQuery
-  } = useReadCypher('MATCH (n) RETURN n LIMIT 10')
+  } = useReadCypher('MATCH (n) RETURN n LIMIT 30')
 
   const {
     loading: edgesLoading,
     records: edgesRecords,
     run: runEdgesQuery
-  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 10')
+  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 30')
+
 
   useEffect(() => {
-    runNodesQuery()
-    runEdgesQuery()
-  }, [runEdgesQuery, runNodesQuery])
+    // Run the edges query when the component mounts and every minute afterwards
+    const intervalId = setInterval(() => {
+      runNodesQuery()
+      runEdgesQuery()
+    }, 60000) // Run every minute (60000 milliseconds)
+
+    return () => {
+      // Clear the interval when the component unmounts
+      clearInterval(intervalId)
+    }
+  }, [])
+
 
   useEffect(() => {
+    // Update the nodes state when the nodesRecords changes
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
-        return { id: node.identity.toString(), label: node.labels[0] }
+        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}` }
       })
       setNodes(newNodes)
     }
   }, [nodesRecords])
 
   useEffect(() => {
+    // Update the edges state when the edgesRecords changes
     if (edgesRecords) {
       const newEdges: any = edgesRecords.map((record: any) => {
         const relationship = record.get('r')
@@ -53,17 +66,7 @@ export const KGraph = () => {
 
   return (
     <div>
-      <GraphCanvas
-        nodes={nodes}
-        edges={edges}
-        renderNode={({ node, ...rest }) => (
-          <SphereWithIcon
-            {...rest}
-            node={node}
-            image={node.icon || '/twitter.png'}
-          />
-        )}
-      />
+      <GraphCanvas nodes={nodes} edges={edges} />
     </div>
   )
 }

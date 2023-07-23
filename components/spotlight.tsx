@@ -1,24 +1,56 @@
-'use client'
-import 'react-cmdk/dist/cmdk.css'
-import Image from 'next/image'
-import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk'
-import { useState, useEffect } from 'react'
+'use client';
+import "react-cmdk-dark/dist/cmdk.css";
+import Image from 'next/image';
+import { useState, useEffect } from "react";
+// @ts-ignore
+import CommandPalette, { filterItems, getItemIndex } from "react-cmdk-dark";
+import SismoConnect from '@/components/sismo-connect';
+import { ConnectButton } from '@/components/connect-button';
+import { createDriver } from 'use-neo4j'
+import { createNode } from '../services/neo4j'
 
 const Spotlight = () => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
-  const [open, setOpen] = useState<boolean>(true)
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
+
+const driver = createDriver(
+  'neo4j+s',
+  '008a57cc.databases.neo4j.io',
+  7687,
+  'neo4j',
+  'r5a9crFqtc0kqnioMrMcNZyZyIJ4plwmizIK8Hl-zUg'
+)
+
+interface NodeProps {
+  id: number;
+  name: string;
+  skills: string;
+  email: string;
+}
+
+
+  const label = 'Employees';
+  const data = {
+    id: 13,
+    name: 'Bob',
+    skills: 'none',
+    email: 'bob.com',
+    companyId: 5,
+  };
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key == ' ' || e.code == 'Space' || e.keyCode == 32) {
-        e.preventDefault()
-        e.stopPropagation()
-
-        setIsOpen(currentValue => {
-          return !currentValue
-        })
+      if (e.key == " " ||
+      e.code == "Space" ||      
+      e.keyCode == 32 ) {
+        e.preventDefault();
+        e.stopPropagation();
+  
+        setIsOpen((currentValue: boolean) => {
+          return !currentValue;
+        });
       }
     }
 
@@ -47,17 +79,16 @@ const Spotlight = () => {
               />
             ),
             onClick: () => {
-              console.log('twitter')
+              createNode(label, data)
             }
           },
           {
-            id: 'worldcoin',
-            children: 'Connect to Worldcoin',
+            id: 'walletconnect',
+            children: <ConnectButton />,
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),
             onClick: () => {
-              console.log('wc')
             }
           },
           {
@@ -73,9 +104,8 @@ const Spotlight = () => {
             ),
             closeOnSelect: false,
             onClick: () => {
-              console.log('lens')
-            }
-          },
+            },
+          }, 
           {
             id: 'discord',
             children: 'Connect Discord',
@@ -89,48 +119,35 @@ const Spotlight = () => {
             ),
             closeOnSelect: false,
             onClick: () => {
-              setPage('projects')
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         heading: 'Commands',
         id: 'commands',
         items: [
           {
-            id: 'developer-settings',
-            children: 'Create Sismo Badge',
-            icon: () => (
-              <Image
-                src="/icon-sismo.svg"
-                width="40"
-                height="40"
-                alt="twitter"
-              />
-            ),
-            onClick: () => {
-              alert('Sismo ...')
-            }
+            id: "sismo",
+            children: <SismoConnect />,
+            icon: () => <Image src='/icon-sismo.svg' width="40" height="40" alt="twitter" />,
           },
           {
             id: 'privacy-policy',
             children: 'Create EAS Attestation',
             icon: 'CogIcon',
             onClick: () => {
-              alert('EAS out...')
-            }
+            },
           },
           {
             id: 'email',
             children: 'Re: AWS partnership” — jeff@amazon.com',
             icon: 'CogIcon',
             onClick: () => {
-              alert('email...')
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     ],
     search
   )
@@ -145,9 +162,9 @@ const Spotlight = () => {
     >
       <CommandPalette.Page id="root">
         {filteredItems.length ? (
-          filteredItems.map(list => (
+          filteredItems.map((list :any) => (
             <CommandPalette.List key={list.id} heading={list.heading}>
-              {list.items.map(({ id, ...rest }) => (
+              {list.items.map(({ id, ...rest }: any) => (
                 <CommandPalette.ListItem
                   key={id}
                   index={getItemIndex(filteredItems, id)}
