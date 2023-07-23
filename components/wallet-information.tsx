@@ -5,6 +5,7 @@ import {
     Card,
     CardContent,
 } from '@/components/ui/card';
+import Image from 'next/image';
 
 
 
@@ -22,7 +23,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ walletAddress, totalBalance, nf
         <Card className="bg-[rgba(255, 255, 0.04)] w-[205px] rounded-lg border border-[#2D2D2D]">
             <CardContent className="grid gap-4 p-4">
                 <div className="Content flex flex-col items-start gap-4">
-            <img className="rounded-full" src={walletType} width="60" height="60"/>
+            <Image className="rounded-full" src={walletType} width="60" height="60" alt={'walletLogo'}/>
             <div className="flex flex-col items-start justify-start gap-2">
                 <div className="text-xs font-medium text-gray-400">Account Address</div>
                 <div className="text-md font-medium text-white">{walletAddress}</div>
