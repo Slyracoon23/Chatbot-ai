@@ -52,15 +52,12 @@ export default function IndexPage() {
             <Image src="/GraphID.svg" alt="left" width={300} height={100} />
           )}
           {!clicked && (
-            <p className="mt-6 text-center font-mono text-3xl font-bold">
-              Your Digital Universe, Mapped Out
-            </p>
+            <div className="Slogan text-[32px] font-semibold text-white">Your Digital Universe, Mapped Out</div>
+
           )}
           {!clicked && (
-            <p className="text-mb mb-4 mt-6 text-center font-mono font-light">
-              Reimagine how you share, manage, and visualize your digital data
-              across Web2 and Web3
-            </p>
+                  <div className="MisionStatement w-[461px] text-center text-base font-normal leading-normal tracking-wide mb-8 text-white">Reimagine how you share, manage, and visualize your digital data across Web2 and Web3</div>
+
           )}
           {isVisible && (
             <input
