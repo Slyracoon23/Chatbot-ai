@@ -49,7 +49,8 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [showAttestation, setShowAttestation] = useState(false)
-
+  const [esFrien, setEsFrien] = useState('' as any)
+  const [esFrienName, setEsFrienName] = useState('' as any)
   const worldcoinRef = useRef({ open: () => {} })
 
   const widgetChildren = useCallback(({ open }: any) => {
@@ -453,7 +454,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         {widgetChildren as any}
       </IDKitWidget>
       {showAttestation && (
-        <Dialog open={showAttestation} onOpenChange={setShowAttestation}>
+        <Dialog className="bg-black" open={showAttestation} onOpenChange={setShowAttestation}>
           <DialogTrigger asChild>
             <Button variant="outline">
               Make an Attesation about your Friend!
@@ -467,20 +468,21 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="grid grid-cols-4 items-center gap-4 text-black">
                 <Label htmlFor="name" className="text-right">
                   Name of Friend:
                 </Label>
-                <Input id="name" value="Pedro Duarte" className="col-span-3" />
+                <Input id="name" value={esFrienName} onChange={(e) => setEsFrienName(e.target.value)} className="col-span-3 text-black" />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="grid grid-cols-4 items-center gap-4 text-black">
                 <Label htmlFor="username" className="text-right">
                   EthWallet of Friend:
                 </Label>
                 <Input
                   id="ethwallet"
-                  value="@peduarte"
-                  className="col-span-3"
+                  value={esFrien}
+                  onChange={(e) => setEsFrien(e.target.value)}
+                  className="col-span-3 text-black"
                 />
               </div>
             </div>
