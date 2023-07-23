@@ -105,8 +105,9 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
 
   const cypherEAS = `
   CREATE (u:User {id: $userId})
-  CREATE (t:EasFriend {id: $easId})
-  CREATE (u)-[:CONNECTS]->(t)
+  CREATE (d:DAO {id: "DAO 1", easId: $easId})
+  CREATE (u)-[:IS_MEMBER_OF]->(d)
+  
   `
 
   const [runEASQuery, { loadingEAS, errorEAS, firstEAS }] =
@@ -181,7 +182,6 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
 
 
   const handleEAS = async () => {
-    debugger
     //////////////////////////////////////
 
     const provider = ethers.providers.getDefaultProvider('sepolia')
@@ -339,7 +339,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
             children: 'Connect to Worldcoin',
             icon: () => (
               <Image
-                src="/icon-twitter.svg"
+                src="/icon-worldcoin.svg"
                 width="40"
                 height="40"
                 alt="twitter"
@@ -349,19 +349,6 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
               // debugger
               worldcoinRef.current.open()
             }
-          },
-          {
-            id: 'worldcoin',
-            children: 'Connect to Worldcoin',
-            icon: () => (
-              <Image
-                src="/icon-worldcoin.svg"
-                width="40"
-                height="40"
-                alt="worldcoin"
-              />
-            ),
-            onClick: () => {}
           },
           {
             id: 'walletconnect',
