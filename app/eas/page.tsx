@@ -4,7 +4,8 @@ import {
   EAS,
   Offchain,
   SchemaEncoder,
-  SchemaRegistry
+  SchemaRegistry,
+  TypedDataSigner
 } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
 

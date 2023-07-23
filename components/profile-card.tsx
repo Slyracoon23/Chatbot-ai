@@ -65,10 +65,8 @@ export function UserProfileCard({
               <Image
                 onClick={handleImageClick}
                 className="h-10 w-full cursor-pointer rounded-full object-cover"
-                src={image || "/kartek.png"}
+                src={image}
                 alt={name}
-                width={20}
-                height={20}
               />
               <input
                 ref={fileInputRef}

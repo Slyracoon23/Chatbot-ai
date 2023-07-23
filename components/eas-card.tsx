@@ -4,11 +4,10 @@ import {
   EAS,
   Offchain,
   SchemaEncoder,
-  SchemaRegistry
+  SchemaRegistry,
+  TypedDataSigner
 } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
-
-
 
 const EASContractAddress = '0xC2679fBD37d54388Ce493F1DB75320D236e1815e' // Sepolia v0.26
 
@@ -16,13 +15,13 @@ const AttestationComponent = () => {
   const [isValidSignature, setIsValidSignature] = useState(false)
 
   const createAttestation = async () => {
-    const provider = ethers.providers.getDefaultProvider('sepolia')
+    const provider = (ethers as any).providers.getDefaultProvider('sepolia')
     const privateKey =
       '78f847335d13b4ddf6e2e279515f48d2246256bd910b4f007fa3e6ac16e7887a'
     const signer = new ethers.Wallet(privateKey, provider)
 
     // Assume that eas and sender are initialized elsewhere in your app
-    const eas = new EAS(EASContractAddress, { signerOrProvider: signer })
+    const eas = new EAS(EASContractAddress, { signerOrProvider: signer as any })
 
     const offchain = await eas.getOffchain()
 
@@ -51,7 +50,7 @@ const AttestationComponent = () => {
 
     const response = await offchain.signOffchainAttestation(
       attestationData,
-      signer
+      signer as any as TypedDataSigner
     )
     const isValid = await offchain.verifyOffchainAttestationSignature(
       signer.address,

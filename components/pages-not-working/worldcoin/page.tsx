@@ -1,5 +1,5 @@
 'use client'
-import { CredentialType, IDKitWidget } from '@worldcoin/idkit'
+import { IDKitWidget } from '@worldcoin/idkit'
 
 export default function Worldcoin() {
   const onSuccess = (response: any) => {

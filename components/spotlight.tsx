@@ -87,8 +87,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   // Initialize the hook with the cypher query.
   const [
     runWorldcoinQuery,
-
-    //@ts-ignore
+    // @ts-ignore
     { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
   ] = useLazyWriteCypher(cypherWorldcoin) as any
 
@@ -247,13 +246,13 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
 
     // Run the Cypher query
     runEASQuery(easParams)
-      .then(res => {
+      .then((res: any) => {
         console.log(res)
         // Handle the result...
         runNodesQuery()
         runEdgesQuery()
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.error(err)
         // Handle the error...
       })
