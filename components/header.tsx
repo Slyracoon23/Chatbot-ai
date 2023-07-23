@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import Web3ConnectButton from './web3connect-button'
 import { ThemeToggle } from './theme-toggle'
 

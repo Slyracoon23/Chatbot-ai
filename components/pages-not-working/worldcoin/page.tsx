@@ -1,13 +1,12 @@
 'use client'
-import { IDKitWidget } from '@worldcoin/idkit'
-
+import { CredentialType, IDKitWidget } from '@worldcoin/idkit'
 
 export default function Worldcoin() {
-  const onSuccess = (response:any) => {
+  const onSuccess = (response: any) => {
     console.log('Success!', response)
   }
 
-  const handleVerify = (proof:any) => {
+  const handleVerify = (proof: any) => {
     console.log('Proof received:', proof)
   }
 

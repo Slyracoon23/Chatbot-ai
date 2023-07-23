@@ -1,8 +1,7 @@
-import { Metadata } from 'next'
-
-import { Toaster } from 'react-hot-toast'
-
 import '@/app/globals.css'
+
+import { Metadata } from 'next'
+import { Toaster } from 'react-hot-toast'
 import { fontMono, fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
@@ -11,10 +10,10 @@ import { Header } from '@/components/header'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Next.js AI Chatbot',
-    template: `%s - Next.js AI Chatbot`
+    default: 'GraphID',
+    template: `%s - GraphID`
   },
-  description: 'An AI-powered chatbot template built with Next.js and Vercel.',
+  description: 'A Self-Sovereign Knowledge Graph',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' }
@@ -31,10 +30,10 @@ export const metadata: Metadata = {
       'en-US': '/en-US',
       'de-DE': '/de-DE'
     }
-  },
-  openGraph: {
-    images: '/og-image.png'
   }
+  // openGraph: {
+  //   images: '/og-image.png'
+  // }
 }
 
 interface RootLayoutProps {
