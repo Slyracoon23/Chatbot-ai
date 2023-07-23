@@ -14,6 +14,14 @@ import { EOF } from 'dns'
 import { useLazyWriteCypher } from 'use-neo4j'
 // import { createNode } from '../services/neo4j'
 
+import {
+  EAS,
+  Offchain,
+  SchemaEncoder,
+  SchemaRegistry
+} from '@ethereum-attestation-service/eas-sdk'
+import { ethers } from 'ethers'
+
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -99,13 +107,10 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   CREATE (u:User {id: $userId})
   CREATE (t:EasFriend {id: $easId})
   CREATE (u)-[:CONNECTS]->(t)
-  ` 
+  `
 
-  const [
-    runEASQuery,
-    { loadingEAS, errorEAS, firstEAS }
-  ] = useLazyWriteCypher(cypherEAS)
-
+  const [runEASQuery, { loadingEAS, errorEAS, firstEAS }] =
+    useLazyWriteCypher(cypherEAS)
 
   const cypherSismo = `
   CREATE (u:User {id: $userId, name: $userName})
@@ -174,7 +179,59 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
       })
   }
 
-  const handleEAS = () => {
+  const handleEAS = async () => {
+    debugger
+    //////////////////////////////////////
+
+    const provider = ethers.providers.getDefaultProvider('sepolia')
+    const privateKey =
+      '78f847335d13b4ddf6e2e279515f48d2246256bd910b4f007fa3e6ac16e7887a'
+    const signer = new ethers.Wallet(privateKey, provider)
+
+    const EASContractAddress = '0xC2679fBD37d54388Ce493F1DB75320D236e1815e' // Sepolia v0.26
+
+    // Assume that eas and sender are initialized elsewhere in your app
+    const eas = new EAS(EASContractAddress, { signerOrProvider: signer })
+
+    const offchain = await eas.getOffchain()
+
+    // Initialize SchemaEncoder with the schema string
+    const schemaEncoder = new SchemaEncoder('uint256 eventId, uint8 voteIndex')
+    const encodedData = schemaEncoder.encodeData([
+      { name: 'eventId', value: 1, type: 'uint256' },
+      { name: 'voteIndex', value: 1, type: 'uint8' }
+    ])
+
+    const schemaUID =
+      '0xb16fa048b0d597f5a821747eba64efa4762ee5143e9a80600d0005386edfc995'
+
+    const attestationData = {
+      recipient: signer.address,
+      // Unix timestamp of when attestation expires. (0 for no expiration)
+      expirationTime: 0,
+      // Unix timestamp of current time
+      time: 1671219636,
+      revocable: true,
+      version: 1,
+      nonce: 0,
+      schema: schemaUID,
+      refUID:
+        '0xee0d4d106d3f65f24f38d132138194a75c8788e9df520b526560ce825ddb60e3',
+      data: encodedData,
+    }
+
+    const response = await offchain.signOffchainAttestation(
+      attestationData,
+      signer
+    )
+
+    const isValid = await offchain.verifyOffchainAttestationSignature(
+      signer.address,
+      response
+    )
+    alert('Attestation created successfully! and is valid: ' + isValid)
+    ////////////////////////////////////////////
+
     // Define Cypher query for connecting user with Worldcoin entity
     setShowAttestation(false)
     // Define parameters for the Cypher query
@@ -196,7 +253,6 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         // Handle the error...
       })
   }
-
 
   const handleClick = (id: string) => {
     switch (id) {
@@ -375,7 +431,9 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
             id: 'privacy-policy',
             children: 'Create EAS Attestation',
             icon: 'CogIcon',
-            onClick: () => {setShowAttestation(true)}
+            onClick: () => {
+              setShowAttestation(true)
+            }
           },
           {
             id: 'email',
@@ -430,16 +488,17 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         {widgetChildren as any}
       </IDKitWidget>
       {showAttestation && (
-        <Dialog open={showAttestation} onOpenChange={setShowAttestation} 
-        >
+        <Dialog open={showAttestation} onOpenChange={setShowAttestation}>
           <DialogTrigger asChild>
-            <Button variant="outline">Make an Attesation about your Friend!</Button>
+            <Button variant="outline">
+              Make an Attesation about your Friend!
+            </Button>
           </DialogTrigger>
           <DialogContent className="bg-white sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Edit profile</DialogTitle>
               <DialogDescription>
-                Create your attestation here! Friend OF ... 
+                Create your attestation here! Friend OF ...
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -453,11 +512,17 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
                 <Label htmlFor="username" className="text-right">
                   EthWallet of Friend:
                 </Label>
-                <Input id="ethwallet" value="@peduarte" className="col-span-3" />
+                <Input
+                  id="ethwallet"
+                  value="@peduarte"
+                  className="col-span-3"
+                />
               </div>
             </div>
             <DialogFooter>
-              <Button onClick={handleEAS} type="submit">Save changes</Button>
+              <Button onClick={handleEAS} type="submit">
+                Save changes
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
