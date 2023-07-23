@@ -3,11 +3,11 @@ import { IDKitWidget } from '@worldcoin/idkit'
 
 
 export default function Worldcoin() {
-  const onSuccess = (response) => {
+  const onSuccess = (response: any) => {
     console.log('Success!', response)
   }
 
-  const handleVerify = (proof) => {
+  const handleVerify = (proof: any) => {
     console.log('Proof received:', proof)
   }
 
