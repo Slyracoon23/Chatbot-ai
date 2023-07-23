@@ -1,4 +1,5 @@
 'use client'
+
 import 'react-cmdk-dark/dist/cmdk.css'
 import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef } from 'react'
@@ -23,6 +24,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const worldcoinRef = useRef({ open: () => {} })
 
@@ -46,7 +48,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   }
 
   const handleWorldcoinVerify = (data: any) => {
-    console.log('Proof received:', data)
+    console.log(data)
     // handle Worldcoin proof receipt here
     // Define Cypher query for connecting user with Worldcoin entity
 
@@ -62,6 +64,8 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   // Initialize the hook with the cypher query.
   const [
     runWorldcoinQuery,
+
+    //@ts-ignore
     { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
   ] = useLazyWriteCypher(cypherWorldcoin)
 
@@ -253,7 +257,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
           },
           {
             id: 'walletconnect',
-            children: <ConnectButton />,
+            children: () => <ConnectButton />,
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),

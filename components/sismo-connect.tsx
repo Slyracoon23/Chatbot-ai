@@ -1,29 +1,29 @@
-"use client";
+'use client'
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import {
   SismoConnectButton,
   SismoConnectResponse,
-  SismoConnectVerifiedResult,
-} from "@sismo-core/sismo-connect-react";
+  SismoConnectVerifiedResult
+} from '@sismo-core/sismo-connect-react'
 import {
   CONFIG,
   AUTHS,
   CLAIMS,
   SIGNATURE_REQUEST,
   AuthType,
-  ClaimType,
-} from "../sismo-connect-config";
+  ClaimType
+} from '../sismo-connect-config'
 
 const AUTH = ['github', 'twitter', 'telegram']
 export default function SismoConnect({ setSearch, handleSubmit, setIsOpen }: any) {
   const [sismoConnectVerifiedResult, setSismoConnectVerifiedResult] =
-    useState<SismoConnectVerifiedResult>();
-  const [sismoConnectResponse, setSismoConnectResponse] = useState<SismoConnectResponse>();
-  const [pageState, setPageState] = useState<string>("init");
-  const [error, setError] = useState<string>("");
-  const { push } = useRouter();
+    useState<SismoConnectVerifiedResult>()
+  const [sismoConnectResponse, setSismoConnectResponse] =
+    useState<SismoConnectResponse>()
+  const [pageState, setPageState] = useState<string>('init')
+  const [error, setError] = useState<string>('')
 
   return (
     <>
@@ -60,20 +60,29 @@ export default function SismoConnect({ setSearch, handleSubmit, setIsOpen }: any
             document.location.href="/";
             setPageState("verified");
           } else {
-            setPageState("error");
-            setError(data);
+            setPageState('error')
+            setError(data)
           }
         }}
       />
     </>
-  );
+  )
 }
 
-function readibleHex(userId: string, startLength = 6, endLength = 4, separator = "...") {
-  if (!userId?.startsWith("0x")) {
-    return userId; // Return the original string if it doesn't start with "0x"
+function readibleHex(
+  userId: string,
+  startLength = 6,
+  endLength = 4,
+  separator = '...'
+) {
+  if (!userId?.startsWith('0x')) {
+    return userId // Return the original string if it doesn't start with "0x"
   }
-  return userId.substring(0, startLength) + separator + userId.substring(userId.length - endLength);
+  return (
+    userId.substring(0, startLength) +
+    separator +
+    userId.substring(userId.length - endLength)
+  )
 }
 
 function getProofDataForAuth(
@@ -84,13 +93,13 @@ function getProofDataForAuth(
     if (proof.auths) {
       for (const auth of proof.auths) {
         if (auth.authType === authType) {
-          return proof.proofData;
+          return proof.proofData
         }
       }
     }
   }
 
-  return null; // returns null if no matching authType is found
+  return null // returns null if no matching authType is found
 }
 
 function getProofDataForClaim(
@@ -102,12 +111,16 @@ function getProofDataForClaim(
   for (const proof of sismoConnectResponse.proofs) {
     if (proof.claims) {
       for (const claim of proof.claims) {
-        if (claim.claimType === claimType && claim.groupId === groupId && claim.value === value) {
-          return proof.proofData;
+        if (
+          claim.claimType === claimType &&
+          claim.groupId === groupId &&
+          claim.value === value
+        ) {
+          return proof.proofData
         }
       }
     }
   }
 
-  return null; // returns null if no matching claimType, groupId and value are found
+  return null // returns null if no matching claimType, groupId and value are found
 }

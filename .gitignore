@@ -36,4 +36,5 @@ yarn-error.log*
 .env
 .vercel
 .vscode
-.tsconfig.tsbuildinfo
+.env*.local
+tsconfig.tsbuildinfo

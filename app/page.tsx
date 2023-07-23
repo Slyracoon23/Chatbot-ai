@@ -1,12 +1,13 @@
 'use client'
 
+import React, { useEffect } from 'react'
+// import { nanoid } from '@/lib/utils'
 import Spotlight from '@/components/spotlight'
 
-export const runtime = 'edge'
-
-import React, { useEffect } from 'react'
 import { KGraph } from '@/components/kgraph'
 import { useReadCypher } from 'use-neo4j'
+
+export const runtime = 'edge'
 
 export default function IndexPage() {
   const {
@@ -25,17 +26,19 @@ export default function IndexPage() {
     // Run once when the component mounts
     runNodesQuery()
     runEdgesQuery()
-  }, [runNodesQuery, runEdgesQuery])
+    // We can add these deps to make linter happy, anyway they will not change
+  }, [runEdgesQuery, runNodesQuery])
 
   return (
     <div className="flex-row justify-around align-middle">
       <Spotlight runNodesQuery={runNodesQuery} runEdgesQuery={runEdgesQuery} />
       <KGraph
-        nodesLoading={nodesLoading}
-        nodesRecords={nodesRecords}
-        edgesRecords={edgesRecords}
-        edgesLoading={edgesLoading}
+      // nodesLoading={nodesLoading}
+      // nodesRecords={nodesRecords}
+      // edgesRecords={edgesRecords}
+      // edgesLoading={edgesLoading}
       />
+      <ConnectButton />
     </div>
   )
 }

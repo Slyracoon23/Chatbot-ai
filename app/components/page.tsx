@@ -1,5 +1,5 @@
 // import { nanoid } from '@/lib/utils'
-import { Chat } from '@/components/chat'
+// import { Chat } from '@/components/chat'
 import Spotlight from '@/components/spotlight'
 import { ConnectButton } from '@/components/connect-button'
 import SocialModal from '@/components/social-modal'
