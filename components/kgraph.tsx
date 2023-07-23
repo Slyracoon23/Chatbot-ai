@@ -27,41 +27,12 @@ export const KGraph = ({
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
   console.log(nodes)
-  console.log(edges)
-
-  // const {
-  //   loading: nodesLoading,
-  //   records: nodesRecords,
-  //   run: runNodesQuery
-  // } = useReadCypher('MATCH (n) RETURN n LIMIT 30')
-
-  // const {
-  //   loading: edgesLoading,
-  //   records: edgesRecords,
-  //   run: runEdgesQuery
-  // } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 30')
-
-  // useEffect(() => {
-  //   // Run the edges query when the component mounts and every minute afterwards
-  //   const intervalId = setInterval(() => {
-  //     runNodesQuery()
-  //     runEdgesQuery()
-  //   }, 60000) // Run every minute (60000 milliseconds)
-
-  //   return () => {
-  //     // Clear the interval when the component unmounts
-  //     clearInterval(intervalId)
-  //   }
-  // }, [])
-
   useEffect(() => {
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
-        return {
-          id: node.identity.toString(),
-          label: `${node.labels[0]}-${node.identity.toString()}`
-        }
+        console.log(node)
+        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}`, icon: `/icon-${node.labels[0]?.toLowerCase()}.svg` }
       })
       setNodes(newNodes)
     }

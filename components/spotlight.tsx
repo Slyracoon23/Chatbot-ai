@@ -12,7 +12,6 @@ import { IDKitWidget } from '@worldcoin/idkit'
 import { createDriver } from 'use-neo4j'
 import { useWriteCypher } from 'use-neo4j'
 import { EOF } from 'dns'
-
 import { useLazyWriteCypher } from 'use-neo4j'
 // import { createNode } from '../services/neo4j'
 
@@ -54,14 +53,28 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
     // handle Worldcoin proof receipt here
   }
 
+
+
+  useEffect(() => {
+    if (window.location.href?.includes('sismoConnectResponse')){
+      setSearch('sismo')
+      setIsOpen(true)
+    }
+  }, [])
+
   const cypher = `
   CREATE (u:User {id: $userId, name: $userName})
   CREATE (t:Twitter {id: $twitterId, username: $twitterUsername})
   CREATE (u)-[:CONNECTS]->(t)
   `
-
+  const cypherSismo = `
+  CREATE (u:User {id: $userId, name: $userName})
+  CREATE (s:Sismo {id: $sismoId, username: $sismoUser, authType: $authType})
+  CREATE (u)-[:CONNECTS]->(t)
+  `
   // Initialize the hook with the cypher query.
   const [runQuery, { loading, error, first }] = useLazyWriteCypher(cypher)
+  const [runQuerySismo] = useLazyWriteCypher(cypherSismo)
 
   const handleTwitterSubmit = () => {
     const params = {
@@ -72,6 +85,20 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
     }
     // Run the query.
     runQuery(params)
+      .then(res => {
+        console.log(res)
+        // Handle the result...
+        runNodesQuery()
+        runEdgesQuery()
+      })
+      .catch(err => {
+        console.error(err)
+        // Handle the error...
+      })
+  }
+  const handleSismoSubmit = (params:any) => {
+    // Run the query.
+    runQuerySismo(params)
       .then(res => {
         console.log(res)
         // Handle the result...
@@ -227,8 +254,9 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         id: 'commands',
         items: [
           {
-            id: 'sismo',
-            children: <SismoConnect />,
+            id: "sismo",
+            keywords: ['Prove with Sismo'],
+            children: <SismoConnect setSearch={setSearch} setIsOpen={setIsOpen} handleSubmit={handleSismoSubmit} />,
             icon: () => (
               <Image
                 src="/icon-sismo.svg"

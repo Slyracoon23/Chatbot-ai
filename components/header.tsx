@@ -39,6 +39,8 @@ export async function Header() {
           <span className="sm:hidden">Deploy</span>
         </a>
       </div> */}
+      <div className="flex items-center justify-end space-x-2">
+      </div>
     </header>
   )
 }

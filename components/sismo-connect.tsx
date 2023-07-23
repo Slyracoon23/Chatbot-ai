@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import {
   SismoConnectButton,
   SismoConnectResponse,
@@ -15,7 +16,8 @@ import {
   ClaimType
 } from '../sismo-connect-config'
 
-export default function SismoConnect() {
+const AUTH = ['github', 'twitter', 'telegram']
+export default function SismoConnect({ setSearch, handleSubmit, setIsOpen }: any) {
   const [sismoConnectVerifiedResult, setSismoConnectVerifiedResult] =
     useState<SismoConnectVerifiedResult>()
   const [sismoConnectResponse, setSismoConnectResponse] =
@@ -34,16 +36,29 @@ export default function SismoConnect() {
         text="Prove with Sismo"
         // Triggered when received Sismo Connect response from user data vault
         onResponse={async (response: SismoConnectResponse) => {
-          setSismoConnectResponse(response)
-          setPageState('verifying')
-          const verifiedResult = await fetch('/api/verify', {
-            method: 'POST',
-            body: JSON.stringify(response)
-          })
-          const data = await verifiedResult.json()
+          setSismoConnectResponse(response);
+          setPageState("verifying");
+          const verifiedResult = await fetch("/api/verify", {
+            method: "POST",
+            body: JSON.stringify(response),
+          });
+          const data = await verifiedResult.json();
+
           if (verifiedResult.ok) {
-            setSismoConnectVerifiedResult(data)
-            setPageState('verified')
+            const auth:any = {}
+            data?.auths?.forEach((item:any) => {
+              auth[AUTH[item.authType]] = item.userId
+            });
+            handleSubmit({
+              sismoId: '1',
+              sismoUser: data?.auths?.[0].userId,
+              authType: AUTH[data?.auths?.[0]?.authType],
+            })
+            setSismoConnectVerifiedResult(data);
+            setSearch('')
+            setIsOpen(false)
+            document.location.href="/";
+            setPageState("verified");
           } else {
             setPageState('error')
             setError(data)
