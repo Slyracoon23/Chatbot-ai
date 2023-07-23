@@ -393,11 +393,12 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         {widgetChildren as any}
       </IDKitWidget>
       {showAttestation && (
-        <Dialog open={showAttestation} onOpenChange={setShowAttestation}>
+        <Dialog open={showAttestation} onOpenChange={setShowAttestation} 
+        >
           <DialogTrigger asChild>
             <Button variant="outline">Edit Profile</Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="bg-white sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Edit profile</DialogTitle>
               <DialogDescription>
