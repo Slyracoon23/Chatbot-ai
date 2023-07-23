@@ -96,6 +96,19 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   CREATE (t:Twitter {id: $twitterId, username: $twitterUsername})
   CREATE (u)-[:CONNECTS]->(t)
   `
+
+  const cypherEAS = `
+  CREATE (u:User {id: $userId})
+  CREATE (t:EasFriend {id: $easId})
+  CREATE (u)-[:CONNECTS]->(t)
+  `
+
+  const [
+    runEASQuery,
+    // @ts-ignore
+    { loadingEAS, errorEAS, firstEAS }
+  ] = useLazyWriteCypher(cypherEAS)
+
   const cypherSismo = `
   CREATE (u:User {id: $userId, name: $userName})
   CREATE (s:Sismo {id: $sismoId, username: $sismoUser, authType: $authType})
@@ -158,6 +171,29 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         runEdgesQuery()
       })
       .catch((err: any) => {
+        console.error(err)
+        // Handle the error...
+      })
+  }
+
+  const handleEAS = () => {
+    // Define Cypher query for connecting user with Worldcoin entity
+    setShowAttestation(false)
+    // Define parameters for the Cypher query
+    const easParams = {
+      userId: 'Earl', // replace this with the actual user ID
+      easId: 1 // replace this with the actual Worldcoin ID
+    }
+
+    // Run the Cypher query
+    runEASQuery(easParams)
+      .then(res => {
+        console.log(res)
+        // Handle the result...
+        runNodesQuery()
+        runEdgesQuery()
+      })
+      .catch(err => {
         console.error(err)
         // Handle the error...
       })
@@ -408,35 +444,42 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         {widgetChildren as any}
       </IDKitWidget>
       {showAttestation && (
-        <Dialog open={showAttestation} onOpenChange={setShowAttestation} 
-        >
+        <Dialog open={showAttestation} onOpenChange={setShowAttestation}>
           <DialogTrigger asChild>
-            <Button variant="outline">Edit Profile</Button>
+            <Button variant="outline">
+              Make an Attesation about your Friend!
+            </Button>
           </DialogTrigger>
           <DialogContent className="bg-white sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Edit profile</DialogTitle>
               <DialogDescription>
                 Make changes to your profile here. Click save when you&aposre
-                done.
+                done. Create your attestation here! Friend OF ...
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
-                  Name
+                  Name of Friend:
                 </Label>
                 <Input id="name" value="Pedro Duarte" className="col-span-3" />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="username" className="text-right">
-                  Username
+                  EthWallet of Friend:
                 </Label>
-                <Input id="username" value="@peduarte" className="col-span-3" />
+                <Input
+                  id="ethwallet"
+                  value="@peduarte"
+                  className="col-span-3"
+                />
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <Button onClick={handleEAS} type="submit">
+                Save changes
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
