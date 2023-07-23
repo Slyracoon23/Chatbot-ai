@@ -25,16 +25,16 @@ export default function IndexPage() {
     // Run once when the component mounts
     runNodesQuery()
     runEdgesQuery()
-  }, [runNodesQuery, runEdgesQuery])
+  }, [])
 
   return (
     <div className="flex-row justify-around align-middle">
       <Spotlight runNodesQuery={runNodesQuery} runEdgesQuery={runEdgesQuery} />
       <KGraph
-      // nodesLoading={nodesLoading}
-      // nodesRecords={nodesRecords}
-      // edgesRecords={edgesRecords}
-      // edgesLoading={edgesLoading}
+        nodesLoading={nodesLoading}
+        nodesRecords={nodesRecords}
+        edgesRecords={edgesRecords}
+        edgesLoading={edgesLoading}
       />
       <Web3ConnectButton />
     </div>

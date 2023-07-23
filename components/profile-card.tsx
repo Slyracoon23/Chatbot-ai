@@ -16,6 +16,7 @@ type UserProfileCardProps = {
   profileImage: string
   username: string
   userAddress: string
+  onClose?: () => void
 }
 
 export function UserProfileCard({
@@ -23,6 +24,7 @@ export function UserProfileCard({
   profileImage,
   username,
   userAddress,
+  onClose,
   ...props
 }: CardProps & UserProfileCardProps) {
   const [isEditing, setIsEditing] = useState(false)
@@ -51,7 +53,7 @@ export function UserProfileCard({
   return (
     <Card
       className={cn(
-        'bg-[rgba(255, 255, 0.04)] w-[205px] rounded-lg border border-[#2D2D2D]',
+        'bg-black bg-opacity-50 w-[205px] rounded-lg border border-[#2D2D2D] absolute bottom-0 left-0 z-10',
         className
       )}
       {...props}
@@ -63,8 +65,10 @@ export function UserProfileCard({
               <Image
                 onClick={handleImageClick}
                 className="h-10 w-full cursor-pointer rounded-full object-cover"
-                src={image}
+                src={image || "/kartek.png"}
                 alt={name}
+                width={20}
+                height={20}
               />
               <input
                 ref={fileInputRef}
@@ -105,7 +109,9 @@ export function UserProfileCard({
           </div>
         </div>
 
-        <Button className="h-6 w-full bg-transparent text-xs text-[#FFFFFF] hover:bg-[#171717}">
+        <Button className="h-6 w-full bg-transparent text-xs text-[#FFFFFF] hover:bg-[#171717}"
+          onClick={onClose}
+        >
           Disconnect
         </Button>
       </CardContent>
