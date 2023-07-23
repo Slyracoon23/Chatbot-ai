@@ -1,46 +1,34 @@
 'use client'
-import React, { useState, useEffect } from 'react'
-import { GraphCanvas } from 'reagraph'
+import React, { useState, useEffect, useRef } from 'react'
+import {
+  darkTheme,
+  GraphCanvas,
+  GraphCanvasRef,
+  GraphEdge,
+  GraphNode,
+  useSelection,
+  RadialMenu,
+  SphereWithSvg,
+  Svg,
+  SphereWithIcon
+} from 'reagraph'
 import { useReadCypher } from 'use-neo4j'
 
-export const KGraph = () => {
+import { CardDemo} from '@/components/card-kgraph';
+
+export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }:any) => {
+  const graphRef = useRef<GraphCanvasRef | null>(null)
+
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
-
-  const {
-    loading: nodesLoading,
-    records: nodesRecords,
-    run: runNodesQuery
-  } = useReadCypher('MATCH (n) RETURN n LIMIT 10')
-
-  const {
-    loading: edgesLoading,
-    records: edgesRecords,
-    run: runEdgesQuery
-  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 10')
-
-
-  useEffect(() => {
-    // Run the edges query when the component mounts and every minute afterwards
-    const intervalId = setInterval(() => {
-      runNodesQuery()
-      runEdgesQuery()
-    }, 60000) // Run every minute (60000 milliseconds)
-
-    return () => {
-      // Clear the interval when the component unmounts
-      clearInterval(intervalId)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-
+  console.log(nodes)
   useEffect(() => {
     // Update the nodes state when the nodesRecords changes
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
-        return { id: node.identity.toString(), label: node.labels[0] }
+        console.log(node)
+        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}`, icon: `/icon-${node.labels[0]?.toLowerCase()}.svg` }
       })
       setNodes(newNodes)
     }
@@ -62,11 +50,40 @@ export const KGraph = () => {
     }
   }, [edgesRecords])
 
+  const {
+    selections,
+    actives,
+    onNodeClick,
+    onCanvasClick,
+    onNodePointerOver,
+    onNodePointerOut
+  } = useSelection({
+    ref: graphRef,
+    nodes,
+    edges,
+    pathSelectionType: 'out'
+  })
+
   if (nodesLoading || edgesLoading) return <div>Loading...</div>
 
   return (
     <div>
-      <GraphCanvas nodes={nodes} edges={edges} />
+      <GraphCanvas
+        theme={darkTheme}
+        nodes={nodes}
+        edges={edges}
+        ref={graphRef}
+        selections={selections}
+        onCanvasClick={onCanvasClick}
+        onNodeClick={onNodeClick}
+        // cameraMode="rotate"
+        renderNode={({ node, ...rest }) => (
+          <SphereWithIcon {...rest} node={node} image={node.icon || '/kartek.png'} />
+        )}
+        contextMenu={({ data, onClose }) => (
+          <CardDemo/>
+        )}
+      />
     </div>
   )
 }

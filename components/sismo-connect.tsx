@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import {
   SismoConnectButton,
   SismoConnectResponse,
@@ -15,12 +16,14 @@ import {
   ClaimType,
 } from "../sismo-connect-config";
 
-export default function SismoConnect() {
+const AUTH = ['github', 'twitter', 'telegram']
+export default function SismoConnect({ setSearch, handleSubmit, setIsOpen }: any) {
   const [sismoConnectVerifiedResult, setSismoConnectVerifiedResult] =
     useState<SismoConnectVerifiedResult>();
   const [sismoConnectResponse, setSismoConnectResponse] = useState<SismoConnectResponse>();
   const [pageState, setPageState] = useState<string>("init");
   const [error, setError] = useState<string>("");
+  const { push } = useRouter();
 
   return (
     <>
@@ -40,8 +43,21 @@ export default function SismoConnect() {
             body: JSON.stringify(response),
           });
           const data = await verifiedResult.json();
+
           if (verifiedResult.ok) {
+            const auth:any = {}
+            data?.auths?.forEach((item:any) => {
+              auth[AUTH[item.authType]] = item.userId
+            });
+            handleSubmit({
+              sismoId: '1',
+              sismoUser: data?.auths?.[0].userId,
+              authType: AUTH[data?.auths?.[0]?.authType],
+            })
             setSismoConnectVerifiedResult(data);
+            setSearch('')
+            setIsOpen(false)
+            document.location.href="/";
             setPageState("verified");
           } else {
             setPageState("error");
