@@ -8,9 +8,6 @@ dependencies:
   '@ethereum-attestation-service/eas-sdk':
     specifier: ^0.29.1
     version: 0.29.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(bufferutil@4.0.7)(typescript@5.1.6)(utf-8-validate@5.0.10)
-  '@nanostores/react':
-    specifier: github:ai/react
-    version: github.com/ai/react/b71b8427c9ec9c780083544505495ce7b36b7059(nanostores@0.9.3)(react@18.2.0)
   '@radix-ui/react-alert-dialog':
     specifier: 1.0.4
     version: 1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
@@ -8637,11 +8634,6 @@ packages:
     hasBin: true
     dev: false
 
-  /nanostores@0.9.3:
-    resolution: {integrity: sha512-KobZjcVyNndNrb5DAjfs0WG0lRcZu5Q1BOrfTOxokFLi25zFrWPjg+joXC6kuDqNfSt9fQwppyjUBkRPtsL+8w==}
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    dev: false
-
   /napi-macros@2.2.2:
     resolution: {integrity: sha512-hmEVtAGYzVQpCKdbQea4skABsdXW4RUh5t5mJ2zzqowJS2OyXZTU1KhDVFhx+NlWZ4ap9mqR9TcDO3LTTttd+g==}
     dev: false
@@ -11823,17 +11815,3 @@ packages:
       - '@testing-library/jest-dom'
       - neo4j-driver
       - react-testing-library
-
-  github.com/ai/react/b71b8427c9ec9c780083544505495ce7b36b7059(nanostores@0.9.3)(react@18.2.0):
-    resolution: {commit: b71b8427c9ec9c780083544505495ce7b36b7059, repo: git+ssh://git@github.com/ai/react.git, type: git}
-    id: github.com/ai/react/b71b8427c9ec9c780083544505495ce7b36b7059
-    name: '@nanostores/react'
-    version: 0.7.1
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
-    peerDependencies:
-      nanostores: ^0.9.0
-      react: '>=18.0.0'
-    dependencies:
-      nanostores: 0.9.3
-      react: 18.2.0
-    dev: false
