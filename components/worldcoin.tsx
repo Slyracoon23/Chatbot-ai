@@ -3,11 +3,11 @@ import { IDKitWidget } from '@worldcoin/idkit'
 
 
 export default function Worldcoin() {
-  const onSuccess = (response) => {
+  const onSuccess = (response:any) => {
     console.log('Success!', response)
   }
 
-  const handleVerify = (proof) => {
+  const handleVerify = (proof:any) => {
     console.log('Proof received:', proof)
   }
 
@@ -18,6 +18,7 @@ export default function Worldcoin() {
         action="monstor-proof" // this is your action name from the Developer Portal
         onSuccess={onSuccess} // callback when the modal is closed
         handleVerify={handleVerify} // optional callback when the proof is received
+        //@ts-ignore
         credential_types={['orb', 'phone']} // optional, defaults to ['orb']
         enableTelemetry // optional, defaults to false
       >

@@ -22,7 +22,7 @@ interface NodeProps {
   email: string
 }
 
-const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
+const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -33,9 +33,9 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
   const worldcoinRef = useRef({ open: () => {} });
 
 
-  const widgetChildren = useCallback(({ open }) => {
+  const widgetChildren = useCallback(({ open }:any) => {
     worldcoinRef.current.open = open;
-    return null;
+    return null; // Here you are returning null, you could also return a React element if needed.
   }, []);
 
   // useEffect(() => {
@@ -44,13 +44,13 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
   //   }
   // }, [worldcoinModalOpen]);
 
-  const handleWorldcoinSuccess = (data) => {
+  const handleWorldcoinSuccess = (data:any) => {
     console.log(data)
     // handle successful Worldcoin verification here
     setWorldcoinModalOpen(false)
   }
 
-  const handleWorldcoinVerify = (data) => {
+  const handleWorldcoinVerify = (data:any) => {
     console.log(data)
     // handle Worldcoin proof receipt here
   }
@@ -287,17 +287,17 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
         </CommandPalette.Page>
       </CommandPalette>
       <Worldcoin />
-
         <IDKitWidget
           ref={worldcoinRef}
           app_id="app_ae12796fe25aa0e49f21304075b405a4"
           action="monstor-proof"
           onSuccess={handleWorldcoinSuccess}
           handleVerify={handleWorldcoinVerify}
+          //@ts-ignore
           credential_types={['orb', 'phone']}
           enableTelemetry
         >
-        {widgetChildren}
+        {widgetChildren as any}
 
         </IDKitWidget>
     </>
