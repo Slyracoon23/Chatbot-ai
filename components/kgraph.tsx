@@ -9,6 +9,7 @@ import {
 } from 'reagraph'
 
 import { CardDemo } from '@/components/card-kgraph'
+import { UserProfileCard } from '@/components/profile-card'
 
 export const KGraph = ({
   nodesLoading,
@@ -85,7 +86,8 @@ export const KGraph = ({
             image={node.icon || '/kartek.png'}
           />
         )}
-        contextMenu={({ data, onClose }) => <CardDemo />}
+        contextMenu={({ data, onClose }) => <UserProfileCard className='' profileImage={"/kartek.png"} username={data.id}
+        userAddress={data.id}  onClose={onClose}/>}
       />
     </div>
   )
