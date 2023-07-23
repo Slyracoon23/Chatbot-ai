@@ -11,6 +11,27 @@ import SismoConnect from '@/components/sismo-connect'
 import Worldcoin from '@/components/worldcoin'
 import { useLazyWriteCypher } from 'use-neo4j'
 import Web3ConnectButton from './web3connect-button'
+// import { createNode } from '../services/neo4j'
+
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+
+interface NodeProps {
+  id: number
+  name: string
+  skills: string
+  email: string
+}
 
 const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
@@ -18,6 +39,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [showAttestation, setShowAttestation] = useState(false)
 
   const worldcoinRef = useRef({ open: () => {} })
 
@@ -329,7 +351,9 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
             id: 'privacy-policy',
             children: 'Create EAS Attestation',
             icon: 'CogIcon',
-            onClick: () => {}
+            onClick: () => {
+              setShowAttestation(true)
+            }
           },
           {
             id: 'email',
@@ -383,6 +407,39 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
       >
         {widgetChildren as any}
       </IDKitWidget>
+      {showAttestation && (
+        <Dialog open={showAttestation} onOpenChange={setShowAttestation}>
+          <DialogTrigger asChild>
+            <Button variant="outline">Edit Profile</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Edit profile</DialogTitle>
+              <DialogDescription>
+                Make changes to your profile here. Click save when you&aposre
+                done.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input id="name" value="Pedro Duarte" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="username" className="text-right">
+                  Username
+                </Label>
+                <Input id="username" value="@peduarte" className="col-span-3" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   )
 }
