@@ -16,6 +16,7 @@ export async function createTempAddress(handle: any, signer: any /*sdk: any*/) {
     identity: { name: 'jon' },
     tx: { query: { linkTo: 'the query link' } }
   }
+
   //   const { identity: user_cred, tx: params } = await sdk._createTempAddress(
   //   (await signer.getAddress()).toLowerCase(),
   //   null,
