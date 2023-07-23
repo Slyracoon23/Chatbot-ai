@@ -256,6 +256,16 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
             onClick: () => {}
           },
           {
+            id: 'polygon',
+            children: 'Age Verification with Polygon Id',
+            icon: () => (
+              <Image src="/icon-poly.svg" width="40" height="40" alt="twitter" />
+            ),
+            onClick: () => {
+              window.location.href = 'https://platform-test.polygonid.com/claim-link/ec0dbb00-3aea-41a0-93d8-acb4321f367a'
+            }
+          },
+          {
             id: 'lens',
             children: 'Connect Lens Profile',
             icon: () => (
