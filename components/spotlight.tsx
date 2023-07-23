@@ -20,7 +20,7 @@ interface NodeProps {
   email: string
 }
 
-const Spotlight = () => {
+const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -42,12 +42,13 @@ const Spotlight = () => {
       twitterId: 'Twitter ID 2',
       twitterUsername: 'SLyracoon'
     }
-    debugger;
     // Run the query.
     runQuery(params)
       .then(res => {
         console.log(res)
         // Handle the result...
+        runNodesQuery()
+        runEdgesQuery()
       })
       .catch(err => {
         console.error(err)
