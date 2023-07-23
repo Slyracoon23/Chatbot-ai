@@ -15,7 +15,7 @@ import Web3ConnectButton from './web3connect-button'
 const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(true)
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 

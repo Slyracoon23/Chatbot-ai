@@ -97,3 +97,28 @@
   justify-content: center;
   margin-top: 20%;
 }
+
+.input-transform {
+  transition: transform 30s ease-out;
+  transform: translateY(-30vh) scale(1.5);
+}
+
+.left-transform {
+  transition: transform 15s ease-out;
+  transform: translateX(-50vh) scale(1.1);
+}
+.right-transform {
+  transition: transform 15s ease-out;
+  transform: translateX(50vh) scale(1.1);
+}
+
+.connect-button {
+  padding: 10px;
+  padding-right: 22px;
+  padding-left: 22px;
+  border-radius: 15px;
+  background: greenyellow;
+  color: black;
+  margin-top: 20px;
+  font-size: 16px;
+}
