@@ -28,7 +28,7 @@ export default function IndexPage() {
     // Run once when the component mounts
     runNodesQuery()
     runEdgesQuery()
-  }, [runNodesQuery, runEdgesQuery])
+  }, [])
 
   const LandingPage = () => {
     const handleInputClick = () => {
