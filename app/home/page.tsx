@@ -63,6 +63,7 @@ export default function HomePage() {
           >
             <input
               type="text"
+              // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
               className="InputBox absolute left-[101.42px] top-[212px] inline-flex h-10 w-[365.16px] items-center justify-start gap-[10.32px] rounded-lg border border-white border-opacity-10 bg-white bg-opacity-5 px-[10.32px] py-[6.45px] opacity-60 backdrop-blur-[85.16px]"
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}

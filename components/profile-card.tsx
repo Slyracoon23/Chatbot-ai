@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils"
+import Image from "next/image";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -49,14 +50,16 @@ const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         <div className="inline-flex items-center justify-start gap-4">
           <div className="flex items-center justify-start gap-2">
             <div className="relative">
-              <img onClick={handleImageClick} className="h-10 w-full cursor-pointer rounded-full object-cover" src={image} alt={name} />
+              <Image onClick={handleImageClick} className="h-10 w-full cursor-pointer rounded-full object-cover" src={image} alt={name} />
               <input ref={fileInputRef} onChange={handleImageChange} type="file" hidden accept="image/*" />
+
+              {/* eslint-disable-next-line tailwindcss/migration-from-tailwind-2 */}
               {isEditing && <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
                 <PlusIcon size={20} color="white" />
               </div>}
             </div>
             <div className="inline-flex flex-col items-start justify-start gap-1">
-              {isEditing ? <input value={name} onChange={(e) => setName(e.target.value)} className="break-words bg-[#ABFD2C] text-sm font-medium text-black outline-none w-20" /> : <div className="break-words text-sm font-medium text-white">{name}</div>}
+              {isEditing ? <input value={name} onChange={(e) => setName(e.target.value)} className="w-20 break-words bg-[#ABFD2C] text-sm font-medium text-black outline-none" /> : <div className="break-words text-sm font-medium text-white">{name}</div>}
               <div className="break-words text-xs font-light italic text-gray-400">{userAddress}</div>
             </div>
           </div>
