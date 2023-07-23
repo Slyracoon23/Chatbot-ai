@@ -54,15 +54,7 @@ export default function SismoConnect({
             data?.auths?.forEach((item: any) => {
               auth[AUTH[item.authType]] = item.userId
             })
-            handleSubmit({
-              sismoId: '1',
-              sismoUser: data?.auths?.[0].userId,
-              authType: AUTH[data?.auths?.[0]?.authType]
-            })
             setSismoConnectVerifiedResult(data)
-            setSearch('')
-            setIsOpen(false)
-            document.location.href = '/'
             setPageState('verified')
           } else {
             setPageState('error')
