@@ -20,7 +20,7 @@ interface NodeProps {
   email: string
 }
 
-const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
+const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -181,7 +181,8 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
         id: 'commands',
         items: [
           {
-            id: 'sismo',
+            id: "sismo",
+            keywords: ['Prove with Sismo'],
             children: <SismoConnect />,
             icon: () => (
               <Image
@@ -211,6 +212,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
   )
 
   return (
+    <>
     <CommandPalette
       onChangeSearch={setSearch}
       onChangeOpen={setIsOpen}
@@ -236,6 +238,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }) => {
         )}
       </CommandPalette.Page>
     </CommandPalette>
+    </>
   )
 }
 

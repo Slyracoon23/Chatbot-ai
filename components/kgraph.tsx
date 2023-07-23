@@ -22,8 +22,23 @@ export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }
 
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+<<<<<<< HEAD
   console.log(nodes)
   console.log(edges)
+=======
+
+  const {
+    loading: nodesLoading,
+    records: nodesRecords,
+    run: runNodesQuery
+  } = useReadCypher('MATCH (n) RETURN n LIMIT 30')
+
+  const {
+    loading: edgesLoading,
+    records: edgesRecords,
+    run: runEdgesQuery
+  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 30')
+>>>>>>> 9800a22 (wip)
 
   // const {
   //   loading: nodesLoading,
