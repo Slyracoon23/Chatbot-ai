@@ -18,9 +18,7 @@ import {
 
 const AUTH = ['github', 'twitter', 'telegram']
 export default function SismoConnect({
-  setSearch,
   handleSubmit,
-  setIsOpen
 }: any) {
   const [sismoConnectVerifiedResult, setSismoConnectVerifiedResult] =
     useState<SismoConnectVerifiedResult>()

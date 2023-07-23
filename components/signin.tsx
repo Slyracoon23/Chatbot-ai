@@ -1,5 +1,5 @@
+// @ts-nocheck
 'use client'
-
 import { BrowserProvider } from 'ethers'
 import { useState } from 'react'
 import lf from 'localforage'

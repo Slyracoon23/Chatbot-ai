@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 import 'react-cmdk-dark/dist/cmdk.css'
@@ -368,8 +369,6 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
             keywords: ['Prove with Sismo'],
             children: (
               <SismoConnect
-                setSearch={setSearch}
-                setIsOpen={setIsOpen}
                 handleSubmit={handleSismoSubmit}
               />
             ),

@@ -80,14 +80,14 @@ export const KGraph = ({
         onCanvasClick={onCanvasClick}
         onNodeClick={onNodeClick}
         // cameraMode="rotate"
-        renderNode={({ node, ...rest }) => (
+        renderNode={({ node, ...rest }:any) => (
           <SphereWithIcon
             {...rest}
             node={node}
             image={node.icon}
           />
         )}
-        contextMenu={({ data, onClose }) => <UserProfileCard className='' profileImage={"/kartek.png"} username={data.id}
+        contextMenu={({ data, onClose }:any) => <UserProfileCard className='' profileImage={"/kartek.png"} username={data.id}
         userAddress={data.id}  onClose={onClose}/>}
       />
     </div>
