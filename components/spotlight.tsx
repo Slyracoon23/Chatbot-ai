@@ -7,7 +7,6 @@ import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
 // @ts-ignore
 import { IDKitWidget } from '@worldcoin/idkit'
 import SismoConnect from '@/components/sismo-connect'
-import { ConnectButton } from '@/components/connect-button'
 import Worldcoin from '@/components/worldcoin'
 import { useLazyWriteCypher } from 'use-neo4j'
 
@@ -248,14 +247,6 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
                 height="40"
                 alt="worldcoin"
               />
-            ),
-            onClick: () => {}
-          },
-          {
-            id: 'walletconnect',
-            children: <ConnectButton />,
-            icon: () => (
-              <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),
             onClick: () => {}
           },

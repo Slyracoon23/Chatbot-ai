@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Spotlight from '@/components/spotlight'
 import { KGraph } from '@/components/kgraph'
 import { useReadCypher } from 'use-neo4j'
+import { ConnectButton } from '@/components/connect-button'
 
 export const runtime = 'edge'
 
@@ -48,7 +49,7 @@ export default function IndexPage() {
               type="text"
               placeholder="START SEARCH WITH SPACEBAR..."
           />)}
-          {!clicked && <button className="connect-button">Connect</button>}
+          {/* {!clicked && <ConnectButton />} */}
         </div>
         {!clicked && <Image className={`${clicked ? 'right-transform' : ''}`} src='/right.png' alt="left" width={300} height={500} />}
        </div>

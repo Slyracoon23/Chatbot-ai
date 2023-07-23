@@ -21,8 +21,8 @@ export function ConnectButton() {
   }
 
   return (
-    <Button variant={'roundedOutline'} onClick={onSignIn} disabled={disabled} className={'hover:border-green-500'} >
-      Sign In
+    <Button  className="connect-button hover:border-green-500" variant={'roundedOutline'} onClick={onSignIn} disabled={disabled}>
+      Connect
     </Button>
   )
 }
