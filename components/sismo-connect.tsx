@@ -17,7 +17,7 @@ import {
 } from "../sismo-connect-config";
 
 const AUTH = ['github', 'twitter', 'telegram']
-export default function SismoConnect({ handleSubmit, setIsOpen }: any) {
+export default function SismoConnect({ setSearch, handleSubmit, setIsOpen }: any) {
   const [sismoConnectVerifiedResult, setSismoConnectVerifiedResult] =
     useState<SismoConnectVerifiedResult>();
   const [sismoConnectResponse, setSismoConnectResponse] = useState<SismoConnectResponse>();
@@ -43,8 +43,7 @@ export default function SismoConnect({ handleSubmit, setIsOpen }: any) {
             body: JSON.stringify(response),
           });
           const data = await verifiedResult.json();
-          console.log("data")
-          console.log(data)
+
           if (verifiedResult.ok) {
             const auth:any = {}
             data?.auths?.forEach((item:any) => {
@@ -56,7 +55,9 @@ export default function SismoConnect({ handleSubmit, setIsOpen }: any) {
               authType: AUTH[data?.auths?.[0]?.authType],
             })
             setSismoConnectVerifiedResult(data);
+            setSearch('')
             setIsOpen(false)
+            document.location.href="/";
             setPageState("verified");
           } else {
             setPageState("error");

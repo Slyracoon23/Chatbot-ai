@@ -208,7 +208,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
           {
             id: "sismo",
             keywords: ['Prove with Sismo'],
-            children: <SismoConnect setIsOpen={setIsOpen} handleSubmit={handleSismoSubmit} />,
+            children: <SismoConnect setSearch={setSearch} setIsOpen={setIsOpen} handleSubmit={handleSismoSubmit} />,
             icon: () => (
               <Image
                 src="/icon-sismo.svg"
