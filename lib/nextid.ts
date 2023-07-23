@@ -16,6 +16,7 @@ export async function createTempAddress(handle: any, signer: any /*sdk: any*/) {
     identity: { name: 'jon' },
     tx: { query: { linkTo: 'the query link' } }
   }
+
   //   const { identity: user_cred, tx: params } = await sdk._createTempAddress(
   //   (await signer.getAddress()).toLowerCase(),
   //   null,
@@ -86,8 +87,8 @@ export async function connectWithWeaveDB(contractTxId: any) {
   console.log('pretend to connect with arweave sdk')
 }
 
-export async function getPubKey(identity: any) {
-  // const signer = await new BrowserProvider(window["ethereum" as any] as any).getSigner()
+export async function getPubKey(identity) {
+  // const signer = await new BrowserProvider(window.ethereum).getSigner()
   // const addr = await signer.getAddress()
   // const message = `NextID\nPlatform: twitter\nIdentity: ${identity}\nTimestamp: ${Date.now()}\nWallet Address: ${addr}`
   // const pubKey = SigningKey.recoverPublicKey(
@@ -96,11 +97,7 @@ export async function getPubKey(identity: any) {
   // )
   // const compressed = publicKey.compress(pubKey.slice(2))
   // const public_key = `0x${compressed}`
-  const public_key = '0xdead'
-  const addr = '0xcafe'
-  const signer = '0xman'
-
-  return { public_key, addr, signer }
+  // return { public_key, addr, signer }
 }
 
 export async function isOwner(identity: any, public_key: any) {
@@ -123,27 +120,27 @@ export async function isOwner(identity: any, public_key: any) {
 }
 
 export async function signPayload(identity: any, public_key: any, signer: any) {
-  // const res = await fetch("https://proof-service.next.id/v1/proof/payload", {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     action: "create",
-  //     platform: "twitter",
-  //     identity,
-  //     public_key,
-  //   }),
-  // }).then(v => v.json())
+  const res = await fetch("https://proof-service.next.id/v1/proof/payload", {
+    method: "POST",
+    body: JSON.stringify({
+      action: "create",
+      platform: "twitter",
+      identity,
+      public_key,
+    }),
+  }).then(v => v.json())
   // const sig = await signer.signMessage(res.sign_payload)
   // const base64 = Buffer.from(sig.slice(2), "hex").toString("base64")
   // const tweet = res.post_content.default
   //   .split("\n")
   //   .map((v: any) => v.replace("%SIG_BASE64%", base64))
   //   .join("\n")
-  return {
-    signature: 'base64sign', //base64,
-    uuid: 'uuiiiddd', //res.uuid,
-    created_at: 'some day', //res.created_at,
-    tweet: 'twwwwettt'
-  }
+  // return {
+  //   signature: base64,
+  //   uuid: res.uuid,
+  //   created_at: res.created_at,
+  //   tweet,
+  // }
 }
 
 export async function verifyProof(statusID: any, nextID: any) {
@@ -162,6 +159,15 @@ export async function verifyProof(statusID: any, nextID: any) {
   //     }),
   //   }).then(v => v.json())
   //   return isEmpty(verify)
-  // } catch (e) {}
+  // } catch (e) { }
   return false
 }
+
+/*
+tweet: `This is proof of my account ownership and participation in GraphID
+ 
+▫️▫️▫️▫️▫️▫️▫️▫️▫️
+ 
+e36ff5de2f03504f70c167759e58a95e1d779ba6f5ee460511df1406c8069107
+`
+*/

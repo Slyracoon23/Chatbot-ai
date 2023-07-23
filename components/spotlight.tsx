@@ -1,4 +1,5 @@
 'use client'
+
 import 'react-cmdk-dark/dist/cmdk.css'
 import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef } from 'react'
@@ -180,7 +181,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
           },
           {
             id: 'walletconnect',
-            children: <ConnectButton />,
+            children: () => <ConnectButton />,
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),
