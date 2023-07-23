@@ -2,13 +2,9 @@
 
 import { BrowserProvider } from 'ethers'
 import { useState } from 'react'
-// import { Input, Box, Flex } from "@chakra-ui/react"
 import lf from 'localforage'
-import { last, assoc, isNil } from 'ramda'
-import Link from 'next/link'
-import Jdenticon from 'react-jdenticon'
+import { assoc, isNil } from 'ramda'
 import {
-  connectWithWeaveDB,
   createTempAddress,
   getPubKey,
   isOwner,
@@ -24,16 +20,17 @@ export default function SignIn({
   userMap,
   setUserMap,
   setUser
-}: // sdk
-any) {
+}: any) {
   const [nextID, setNextID] = useState(null)
   const [logging, setLogging] = useState(false)
   const [handle, setHandle] = useState('')
   const [statusID, setStatusID] = useState('')
 
-  return !isModal ? null : (
+  if (!isModal) return null
+
+  return (
     <div onClick={() => setIsModal(false)}>
-      <Button
+      <div
         onClick={(e: any) => {
           e.stopPropagation()
         }}
@@ -63,9 +60,10 @@ any) {
                 onChange={e => setStatusID(e.target.value)}
                 value={statusID}
               />
-              <div
+              <Button
                 onClick={async () => {
                   setLogging(true)
+                  console.log('verifying twitter')
                   try {
                     if (/^\s*$/.test(statusID)) {
                       alert('specify status ID')
@@ -76,6 +74,7 @@ any) {
                       const signer = await new BrowserProvider(
                         (window as any).ethereum
                       ).getSigner()
+                      console.log('we have signer', signer)
                       const { new_user, user_with_cred } =
                         await createTempAddress(
                           (nextID as any).identity,
@@ -101,7 +100,7 @@ any) {
               >
                 {logging ? <div /> : null}
                 <div>Verify</div>
-              </div>
+              </Button>
             </div>
           </>
         ) : (
@@ -157,7 +156,7 @@ any) {
             </Button>
           </div>
         )}
-      </Button>
+      </div>
     </div>
   )
 }

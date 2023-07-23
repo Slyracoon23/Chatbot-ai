@@ -1,4 +1,5 @@
 'use client'
+
 import 'react-cmdk-dark/dist/cmdk.css'
 import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef } from 'react'
@@ -7,16 +8,8 @@ import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
 // @ts-ignore
 import { IDKitWidget } from '@worldcoin/idkit'
 import SismoConnect from '@/components/sismo-connect'
-import { ConnectButton } from '@/components/connect-button'
 import Worldcoin from '@/components/worldcoin'
 import { useLazyWriteCypher } from 'use-neo4j'
-
-interface NodeProps {
-  id: number
-  name: string
-  skills: string
-  email: string
-}
 
 const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
@@ -255,7 +248,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
           },
           {
             id: 'walletconnect',
-            children: <ConnectButton />,
+            children: () => <ConnectButton />,
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),

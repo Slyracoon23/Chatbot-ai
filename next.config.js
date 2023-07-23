@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   experimental: {
-    serverActions: true,
+    // serverActions: true,
   },
   images: {
     remotePatterns: [
@@ -10,8 +10,8 @@ module.exports = {
         protocol: 'https',
         hostname: 'via.placeholder.com',
         port: '',
-        pathname: '/**',
-      },
-    ],
-  },
-};
+        pathname: '/**'
+      }
+    ]
+  }
+}
