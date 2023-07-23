@@ -15,10 +15,9 @@ import {
   AuthType,
   ClaimType,
 } from "../sismo-connect-config";
-import { createNode } from "@/services/neo4j";
 
 const AUTH = ['github', 'twitter', 'telegram']
-export default function SismoConnect() {
+export default function SismoConnect({ handleSubmit, setIsOpen }: any) {
   const [sismoConnectVerifiedResult, setSismoConnectVerifiedResult] =
     useState<SismoConnectVerifiedResult>();
   const [sismoConnectResponse, setSismoConnectResponse] = useState<SismoConnectResponse>();
@@ -35,7 +34,6 @@ export default function SismoConnect() {
         // Signature = user can sign a message embedded in their zk proof
         signature={SIGNATURE_REQUEST}
         text="Prove with Sismo"
-        callbackUrl={"http://localhost:3000/kgraph"}
         // Triggered when received Sismo Connect response from user data vault
         onResponse={async (response: SismoConnectResponse) => {
           setSismoConnectResponse(response);
@@ -45,15 +43,21 @@ export default function SismoConnect() {
             body: JSON.stringify(response),
           });
           const data = await verifiedResult.json();
+          console.log("data")
+          console.log(data)
           if (verifiedResult.ok) {
             const auth:any = {}
             data?.auths?.forEach((item:any) => {
               auth[AUTH[item.authType]] = item.userId
             });
-            createNode('Test 3', auth)
+            handleSubmit({
+              sismoId: '1',
+              sismoUser: data?.auths?.[0].userId,
+              authType: AUTH[data?.auths?.[0]?.authType],
+            })
             setSismoConnectVerifiedResult(data);
+            setIsOpen(false)
             setPageState("verified");
-            push('/kgraph');
           } else {
             setPageState("error");
             setError(data);

@@ -12,13 +12,13 @@ export default function IndexPage() {
     loading: nodesLoading,
     records: nodesRecords,
     run: runNodesQuery
-  } = useReadCypher('MATCH (n) RETURN n LIMIT 30')
+  } = useReadCypher('MATCH (n) RETURN n LIMIT 50')
 
   const {
     loading: edgesLoading,
     records: edgesRecords,
     run: runEdgesQuery
-  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 30')
+  } = useReadCypher('MATCH ()-[r]->() RETURN r LIMIT 50')
 
   useEffect(() => {
     // Run once when the component mounts

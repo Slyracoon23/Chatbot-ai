@@ -3,7 +3,6 @@
 import { SismoConnect, SismoConnectVerifiedResult } from "@sismo-core/sismo-connect-server";
 import { NextResponse } from "next/server";
 import { AUTHS, CLAIMS, CONFIG, SIGNATURE_REQUEST } from "../../../sismo-connect-config";
-import { createNode } from "@/services/neo4j";
 
 const sismoConnect = SismoConnect({ config: CONFIG });
 

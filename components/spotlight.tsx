@@ -9,7 +9,6 @@ import { ConnectButton } from '@/components/connect-button'
 import { createDriver } from 'use-neo4j'
 import { useWriteCypher } from 'use-neo4j'
 import { EOF } from 'dns'
-
 import { useLazyWriteCypher } from 'use-neo4j'
 // import { createNode } from '../services/neo4j'
 
@@ -25,25 +24,51 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
+  useEffect(() => {
+    if (window.location.href?.includes('sismoConnectResponse')){
+      setSearch('sismo')
+      setIsOpen(true)
+    }
+  }, [])
+
   const cypher = `
   CREATE (u:User {id: $userId, name: $userName})
   CREATE (t:Twitter {id: $twitterId, username: $twitterUsername})
   CREATE (u)-[:CONNECTS]->(t)
   `
-
+  const cypherSismo = `
+  CREATE (u:User {id: $userId, name: $userName})
+  CREATE (s:Sismo {id: $sismoId, username: $sismoUser, authType: $authType})
+  CREATE (u)-[:CONNECTS]->(t)
+  `
   // Initialize the hook with the cypher query.
   const [runQuery, { loading, error, first }] = useLazyWriteCypher(cypher)
+  const [runQuerySismo] = useLazyWriteCypher(cypherSismo)
 
-  const handleTwitterSubmit = () => {
+  const params = {
+    userId: 'Earl',
+    userName: 'earl',
+    twitterId: 'Twitter ID',
+    twitterUsername: 'SLyracoon'
+  }
 
-    const params = {
-      userId: 'Earl',
-      userName: 'earl',
-      twitterId: 'Twitter ID 2',
-      twitterUsername: 'SLyracoon'
-    }
+  const handleTwitterSubmit = (params:any) => {
     // Run the query.
     runQuery(params)
+      .then(res => {
+        console.log(res)
+        // Handle the result...
+        runNodesQuery()
+        runEdgesQuery()
+      })
+      .catch(err => {
+        console.error(err)
+        // Handle the error...
+      })
+  }
+  const handleSismoSubmit = (params:any) => {
+    // Run the query.
+    runQuerySismo(params)
       .then(res => {
         console.log(res)
         // Handle the result...
@@ -131,7 +156,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
                 alt="twitter"
               />
             ),
-            onClick: () => { handleTwitterSubmit() }
+            onClick: () => { handleTwitterSubmit(params) }
           },
           {
             id: 'walletconnect',
@@ -183,7 +208,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
           {
             id: "sismo",
             keywords: ['Prove with Sismo'],
-            children: <SismoConnect />,
+            children: <SismoConnect setIsOpen={setIsOpen} handleSubmit={handleSismoSubmit} />,
             icon: () => (
               <Image
                 src="/icon-sismo.svg"
