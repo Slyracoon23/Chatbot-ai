@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Spotlight from '@/components/spotlight'
 import { KGraph } from '@/components/kgraph'
 import { useReadCypher } from 'use-neo4j'
-import { ConnectButton } from '@/components/connect-button'
+import Web3ConnectButton from '@/components/web3connect-button'
 
 export const runtime = 'edge'
 
