@@ -32,6 +32,7 @@
     "@vercel/kv": "^0.2.1",
     "@vercel/og": "^0.5.7",
     "@walletconnect/modal-auth-react": "2.5.8",
+    "@worldcoin/idkit": "^0.5.1",
     "ai": "^2.1.25",
     "bufferutil": "^4.0.7",
     "class-variance-authority": "^0.7.0",
