@@ -135,12 +135,12 @@ export async function signPayload(identity: any, public_key: any, signer: any) {
   //   .split("\n")
   //   .map((v: any) => v.replace("%SIG_BASE64%", base64))
   //   .join("\n")
-  // return {
-  //   signature: base64,
-  //   uuid: res.uuid,
-  //   created_at: res.created_at,
-  //   tweet,
-  // }
+  return {
+    signature: '', // base64,
+    uuid: '', //res.uuid,
+    created_at: '', // res.created_at,
+    tweet: ''
+  }
 }
 
 export async function verifyProof(statusID: any, nextID: any) {
