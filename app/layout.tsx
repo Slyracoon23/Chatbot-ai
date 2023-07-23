@@ -51,7 +51,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontMono.variable
         )}
       >
-        <Toaster />
+        {/* <Toaster /> */}
         <Providers attribute="class" defaultTheme="system" enableSystem>
           <Neo4jContextProvider>
             <div className="flex min-h-screen flex-col">
