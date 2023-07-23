@@ -1,11 +1,13 @@
 'use client'
 import 'react-cmdk-dark/dist/cmdk.css'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState, useCallback, useEffect,useRef} from 'react'
 // @ts-ignore
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
 import SismoConnect from '@/components/sismo-connect'
 import { ConnectButton } from '@/components/connect-button'
+import Worldcoin from '@/components/worldcoin'
+import { IDKitWidget } from '@worldcoin/idkit'
 import { createDriver } from 'use-neo4j'
 import { useWriteCypher } from 'use-neo4j'
 import { EOF } from 'dns'
@@ -23,6 +25,36 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
+
+
+
+  const worldcoinRef = useRef({ open: () => {} });
+
+
+  const widgetChildren = useCallback(({ open }:any) => {
+    worldcoinRef.current.open = open;
+    return null; // Here you are returning null, you could also return a React element if needed.
+  }, []);
+
+  // useEffect(() => {
+  //   if (worldcoinModalOpen) {
+  //     worldcoinRef.current.open();
+  //   }
+  // }, [worldcoinModalOpen]);
+
+  const handleWorldcoinSuccess = (data:any) => {
+    console.log(data)
+    // handle successful Worldcoin verification here
+    setWorldcoinModalOpen(false)
+  }
+
+  const handleWorldcoinVerify = (data:any) => {
+    console.log(data)
+    // handle Worldcoin proof receipt here
+  }
+
+
 
   useEffect(() => {
     if (window.location.href?.includes('sismoConnectResponse')){
@@ -45,14 +77,13 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
   const [runQuery, { loading, error, first }] = useLazyWriteCypher(cypher)
   const [runQuerySismo] = useLazyWriteCypher(cypherSismo)
 
-  const params = {
-    userId: 'Earl',
-    userName: 'earl',
-    twitterId: 'Twitter ID',
-    twitterUsername: 'SLyracoon'
-  }
-
-  const handleTwitterSubmit = (params:any) => {
+  const handleTwitterSubmit = () => {
+    const params = {
+      userId: 'Earl',
+      userName: 'earl',
+      twitterId: 'Twitter ID 2',
+      twitterUsername: 'SLyracoon'
+    }
     // Run the query.
     runQuery(params)
       .then(res => {
@@ -156,7 +187,25 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
                 alt="twitter"
               />
             ),
-            onClick: () => { handleTwitterSubmit(params) }
+            onClick: () => {
+              handleTwitterSubmit()
+            }
+          },
+          {
+            id: 'Worldcoin',
+            children: 'Connect to Worldcoin',
+            icon: () => (
+              <Image
+                src="/icon-twitter.svg"
+                width="40"
+                height="40"
+                alt="twitter"
+              />
+            ),
+            onClick: () => {
+              debugger
+              worldcoinRef.current.open();
+            }
           },
           {
             id: 'walletconnect',
@@ -238,33 +287,48 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
 
   return (
     <>
-    <CommandPalette
-      onChangeSearch={setSearch}
-      onChangeOpen={setIsOpen}
-      search={search}
-      isOpen={isOpen}
-      page={page}
-    >
-      <CommandPalette.Page id="root">
-        {filteredItems.length ? (
-          filteredItems.map((list: any) => (
-            <CommandPalette.List key={list.id} heading={list.heading}>
-              {list.items.map(({ id, ...rest }: any) => (
-                <CommandPalette.ListItem
-                  key={id}
-                  index={getItemIndex(filteredItems, id)}
-                  {...rest}
-                />
-              ))}
-            </CommandPalette.List>
-          ))
-        ) : (
-          <CommandPalette.FreeSearchAction />
-        )}
-      </CommandPalette.Page>
-    </CommandPalette>
+      <CommandPalette
+        onChangeSearch={setSearch}
+        onChangeOpen={setIsOpen}
+        search={search}
+        isOpen={isOpen}
+        page={page}
+      >
+        <CommandPalette.Page id="root">
+          {filteredItems.length ? (
+            filteredItems.map((list: any) => (
+              <CommandPalette.List key={list.id} heading={list.heading}>
+                {list.items.map(({ id, ...rest }: any) => (
+                  <CommandPalette.ListItem
+                    key={id}
+                    index={getItemIndex(filteredItems, id)}
+                    {...rest}
+                  />
+                ))}
+              </CommandPalette.List>
+            ))
+          ) : (
+            <CommandPalette.FreeSearchAction />
+          )}
+        </CommandPalette.Page>
+      </CommandPalette>
+      <Worldcoin />
+        <IDKitWidget
+          ref={worldcoinRef}
+          app_id="app_ae12796fe25aa0e49f21304075b405a4"
+          action="monstor-proof"
+          onSuccess={handleWorldcoinSuccess}
+          handleVerify={handleWorldcoinVerify}
+          //@ts-ignore
+          credential_types={['orb', 'phone']}
+          enableTelemetry
+        >
+        {widgetChildren as any}
+
+        </IDKitWidget>
     </>
   )
 }
+
 
 export default Spotlight

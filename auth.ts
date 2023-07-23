@@ -41,7 +41,8 @@ export const {
       token.userRole = "admin"
       return token
     },
-    authorized({ auth }) {
+    // @ts-ignore
+    authorized({ auth }:any) {
       return true // this ensures there is a logged in user for -every- request
     }
   },

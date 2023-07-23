@@ -17,7 +17,7 @@ import { useReadCypher } from 'use-neo4j'
 import { CardDemo} from '@/components/card-kgraph';
 
 
-export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }) => {
+export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }:any) => {
   const graphRef = useRef<GraphCanvasRef | null>(null)
 
   const [nodes, setNodes] = useState([])
@@ -80,7 +80,7 @@ export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }
         renderNode={({ node, ...rest }) => (
           <SphereWithIcon {...rest} node={node} image={node.icon || '/kartek.png'} />
         )}
-        contextMenu={({ data, additional, onClose }) => (
+        contextMenu={({ data, onClose }) => (
           <CardDemo/>
         )}
       />
