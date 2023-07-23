@@ -46,7 +46,7 @@ export default function NotificationsCard({ className, ...props }: CardProps) {
           Mark all as read
         </Button>
       </CardHeader>
-      <Separator className="w-full border-0 border-[#2D2D2D]" />
+      <Separator className=" w-full border-0 border-[#2D2D2D]" />
       <CardContent className="grid gap-4 p-5">
         <div className="space-y-4">
           {notifications.map((notification, index) => (
