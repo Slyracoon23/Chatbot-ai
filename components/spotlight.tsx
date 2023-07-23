@@ -42,17 +42,36 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   //   }
   // }, [worldcoinModalOpen]);
 
+ 
   const handleWorldcoinSuccess = (data: any) => {
     console.log(data)
     // handle successful Worldcoin verification here
     setWorldcoinModalOpen(false)
+
+    handleWorldcoinSubmit();
+
   }
 
   const handleWorldcoinVerify = (data: any) => {
     console.log(data)
     // handle Worldcoin proof receipt here
+    // Define Cypher query for connecting user with Worldcoin entity
+
+    handleWorldcoinSubmit();
+
   }
 
+  const cypherWorldcoin = `
+  CREATE (u:User {id: $userId})
+  CREATE (w:Worldcoin {id: $worldcoinId})
+  CREATE (u)-[:CONNECTS]->(w)
+  `
+
+  // Initialize the hook with the cypher query.
+  const [
+    runWorldcoinQuery,
+    { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
+  ] = useLazyWriteCypher(cypherWorldcoin)
 
 
   useEffect(() => {
@@ -110,6 +129,32 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
         // Handle the error...
       })
   }
+
+  const handleWorldcoinSubmit = () => {
+    // Define Cypher query for connecting user with Worldcoin entity
+
+     // Define parameters for the Cypher query
+     const worldcoinParams = {
+      userId: 'Earl', // replace this with the actual user ID
+      worldcoinId: 1 // replace this with the actual Worldcoin ID
+    }
+
+    // Run the Cypher query
+    runWorldcoinQuery(worldcoinParams)
+      .then(res => {
+        console.log(res)
+        // Handle the result...
+        runNodesQuery()
+        runEdgesQuery()
+      })
+      .catch(err => {
+        console.error(err)
+        // Handle the error...
+      })
+  }
+
+
+
 
   const handleClick = (id: string) => {
     switch (id) {
@@ -202,8 +247,25 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
               />
             ),
             onClick: () => {
-              debugger
               worldcoinRef.current.open()
+
+            }
+          },
+          {
+            id: 'worldcoin',
+            children: 'Connect to Worldcoin' ,
+            icon: () => (
+
+              <Image
+                src="/icon-worldcoin.svg"
+                width="40"
+                height="40"
+                alt="worldcoin"
+              />
+            ),
+            onClick: () => {
+              
+
             }
           },
           {
