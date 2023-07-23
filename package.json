@@ -70,6 +70,7 @@
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-tailwindcss": "3.13.0",
     "eslint": "8.45.0",
+    "nanoid": "4.0.2",
     "openai-edge": "1.2.1",
     "pino-pretty": "10.1.0",
     "postcss": "8.4.27",
