@@ -16,19 +16,19 @@ import { useReadCypher } from 'use-neo4j'
 
 import { CardDemo} from '@/components/card-kgraph';
 
-
 export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }:any) => {
   const graphRef = useRef<GraphCanvasRef | null>(null)
 
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
-
+  console.log(nodes)
   useEffect(() => {
     // Update the nodes state when the nodesRecords changes
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
-        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}` }
+        console.log(node)
+        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}`, icon: `/icon-${node.labels[0]?.toLowerCase()}.svg` }
       })
       setNodes(newNodes)
     }
