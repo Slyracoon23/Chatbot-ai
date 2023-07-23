@@ -58,12 +58,13 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   }, [])
 
   useEffect(() => {
-    if (window.location.href?.includes('sismoConnectResponse')) {
+    if (window.location.href?.includes('sismo')) {
       handleSismoSubmit({
         sismoId: '1',
         sismoUser: '0xuser',
         authType: 'Twitter'
       })
+      handleTwitterSubmit()
     }
   }, [])
 
@@ -105,7 +106,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
 
   const cypher = `
   CREATE (u:User {id: $userId, name: $userName})
-  CREATE (t:Twitter {id: $twitterId, username: $twitterUsername})
+  CREATE (s:Sismo {id: $twitterId, username: $twitterUsername})
   CREATE (u)-[:CONNECTS]->(t)
   `
 
