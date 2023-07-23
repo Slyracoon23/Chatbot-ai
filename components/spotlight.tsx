@@ -208,6 +208,23 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
             }
           },
           {
+            id: 'worldcoin',
+            children: 'Connect to Worldcoin' ,
+            icon: () => (
+
+              <Image
+                src="/icon-worldcoin.svg"
+                width="40"
+                height="40"
+                alt="worldcoin"
+              />
+            ),
+            onClick: () => {
+              
+
+            }
+          },
+          {
             id: 'walletconnect',
             children: <ConnectButton />,
             icon: () => (

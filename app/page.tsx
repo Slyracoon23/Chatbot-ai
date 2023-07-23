@@ -1,12 +1,23 @@
 'use client'
-import React, { useEffect } from 'react'
-import { nanoid } from '@/lib/utils'
+
+// import { nanoid } from '@/lib/utils'
+import { Chat } from '@/components/chat'
 import Spotlight from '@/components/spotlight'
+import { ConnectButton } from '@/components/connect-button'
+import SocialModal from '@/components/social-modal'
+import { UserProfileCard } from '@/components/profile-card'
+import NotificationsCard from '@/components/notifications-card'
+import OtherProfile from '@/components/other-profile'
+import WalletInfo from '@/components/wallet-information'
+
+export const runtime = 'edge'
+
+import React, { useEffect } from 'react'
 import { KGraph } from '@/components/kgraph'
 import { useReadCypher } from 'use-neo4j'
 
 export default function IndexPage() {
-  const id = nanoid()
+  // const id = nanoid()
 
   const {
     loading: nodesLoading,
