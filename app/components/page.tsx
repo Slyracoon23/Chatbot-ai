@@ -1,4 +1,3 @@
-// import { nanoid } from '@/lib/utils'
 import Spotlight from '@/components/spotlight'
 import SocialModal from '@/components/social-modal'
 import { UserProfileCard } from '@/components/profile-card'

@@ -17,7 +17,7 @@ const sismoConnect = SismoConnect({ config: CONFIG })
 // this is the API route that is called by the SismoConnectButton
 export async function POST(req: Request) {
   const sismoConnectResponse = await req.json()
-
+  console.log(sismoConnectResponse)
   try {
     const result: SismoConnectVerifiedResult = await sismoConnect.verify(
       sismoConnectResponse,
@@ -27,7 +27,6 @@ export async function POST(req: Request) {
         signature: SIGNATURE_REQUEST
       }
     )
-
     return NextResponse.json(result, { status: 200 })
   } catch (e: any) {
     console.error(e)
