@@ -8,6 +8,7 @@ import SismoConnect from '@/components/sismo-connect';
 import { ConnectButton } from '@/components/connect-button';
 import { LoginButton } from "./login-button";
 
+
 const Spotlight = () => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
