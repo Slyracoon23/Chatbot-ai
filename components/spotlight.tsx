@@ -57,6 +57,16 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
     return null // Here you are returning null, you could also return a React element if needed.
   }, [])
 
+  useEffect(() => {
+    if (window.location.href?.includes('sismoConnectResponse')) {
+      handleSismoSubmit({
+        sismoId: '1',
+        sismoUser: '0xuser',
+        authType: 'Twitter'
+      })
+    }
+  }, [])
+
   // useEffect(() => {
   //   if (worldcoinModalOpen) {
   //     worldcoinRef.current.open();
@@ -372,13 +382,6 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
                 handleSubmit={handleSismoSubmit}
               />
             ),
-            onClick: () => {
-              handleSismoSubmit({
-                sismoId: '1',
-                sismoUser: '0xuser',
-                authType: 'Twitter'
-              })
-            },
             icon: () => (
               <Image
                 src="/icon-sismo.svg"
