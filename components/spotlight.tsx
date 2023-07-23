@@ -1,56 +1,108 @@
-'use client';
-import "react-cmdk-dark/dist/cmdk.css";
-import Image from 'next/image';
-import { useState, useEffect } from "react";
+'use client'
+import 'react-cmdk-dark/dist/cmdk.css'
+import Image from 'next/image'
+import { useState, useEffect } from 'react'
 // @ts-ignore
-import CommandPalette, { filterItems, getItemIndex } from "react-cmdk-dark";
-import SismoConnect from '@/components/sismo-connect';
-import { ConnectButton } from '@/components/connect-button';
+import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
+import SismoConnect from '@/components/sismo-connect'
+import { ConnectButton } from '@/components/connect-button'
 import { createDriver } from 'use-neo4j'
-import { createNode } from '../services/neo4j'
+import { useWriteCypher } from 'use-neo4j'
+import { EOF } from 'dns'
+
+import { useLazyWriteCypher } from 'use-neo4j'
+// import { createNode } from '../services/neo4j'
+
+interface NodeProps {
+  id: number
+  name: string
+  skills: string
+  email: string
+}
 
 const Spotlight = () => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
+  const cypher = `
+  CREATE (u:User {id: $userId, name: $userName})
+  CREATE (t:Twitter {id: $twitterId, username: $twitterUsername})
+  CREATE (u)-[:CONNECTS]->(t)
+  `
 
-const driver = createDriver(
-  'neo4j+s',
-  '008a57cc.databases.neo4j.io',
-  7687,
-  'neo4j',
-  'r5a9crFqtc0kqnioMrMcNZyZyIJ4plwmizIK8Hl-zUg'
-)
+  // Initialize the hook with the cypher query.
+  const [runQuery, { loading, error, first }] = useLazyWriteCypher(cypher)
 
-interface NodeProps {
-  id: number;
-  name: string;
-  skills: string;
-  email: string;
-}
+  const handleTwitterSubmit = () => {
 
+    const params = {
+      userId: 'Earl',
+      userName: 'earl',
+      twitterId: 'Twitter ID 2',
+      twitterUsername: 'SLyracoon'
+    }
+    debugger;
+    // Run the query.
+    runQuery(params)
+      .then(res => {
+        console.log(res)
+        // Handle the result...
+      })
+      .catch(err => {
+        console.error(err)
+        // Handle the error...
+      })
+  }
 
-  const label = 'Employees';
+  const handleClick = (id: string) => {
+    switch (id) {
+      case 'twitter':
+        console.log('twitter')
+        // createNode(label, data);
+
+        break
+      case 'walletconnect':
+        // handle walletconnect action
+        break
+      case 'lens':
+        // handle lens action
+        break
+      case 'discord':
+        // handle discord action
+        break
+      case 'sismo':
+        // handle sismo action
+        break
+      case 'privacy-policy':
+        // handle privacy-policy action
+        break
+      case 'email':
+        // handle email action
+        break
+      default:
+        console.log(`No case matched for ${id}`)
+    }
+  }
+
+  const label = 'Employees'
   const data = {
     id: 13,
     name: 'Bob',
     skills: 'none',
     email: 'bob.com',
-    companyId: 5,
-  };
+    companyId: 5
+  }
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key == " " ||
-      e.code == "Space" ||      
-      e.keyCode == 32 ) {
-        e.preventDefault();
-        e.stopPropagation();
-  
+      if (e.key == ' ' || e.code == 'Space' || e.keyCode == 32) {
+        e.preventDefault()
+        e.stopPropagation()
+
         setIsOpen((currentValue: boolean) => {
-          return !currentValue;
-        });
+          return !currentValue
+        })
       }
     }
 
@@ -78,9 +130,7 @@ interface NodeProps {
                 alt="twitter"
               />
             ),
-            onClick: () => {
-              createNode(label, data)
-            }
+            onClick: () => { handleTwitterSubmit() }
           },
           {
             id: 'walletconnect',
@@ -88,8 +138,7 @@ interface NodeProps {
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),
-            onClick: () => {
-            }
+            onClick: () => {}
           },
           {
             id: 'lens',
@@ -104,8 +153,10 @@ interface NodeProps {
             ),
             closeOnSelect: false,
             onClick: () => {
-            },
-          }, 
+              // handleClick('twitter');
+              console.log('twitter')
+            }
+          },
           {
             id: 'discord',
             children: 'Connect Discord',
@@ -119,35 +170,41 @@ interface NodeProps {
             ),
             closeOnSelect: false,
             onClick: () => {
-            },
-          },
-        ],
+              console.log('discord')
+            }
+          }
+        ]
       },
       {
         heading: 'Commands',
         id: 'commands',
         items: [
           {
-            id: "sismo",
+            id: 'sismo',
             children: <SismoConnect />,
-            icon: () => <Image src='/icon-sismo.svg' width="40" height="40" alt="twitter" />,
+            icon: () => (
+              <Image
+                src="/icon-sismo.svg"
+                width="40"
+                height="40"
+                alt="twitter"
+              />
+            )
           },
           {
             id: 'privacy-policy',
             children: 'Create EAS Attestation',
             icon: 'CogIcon',
-            onClick: () => {
-            },
+            onClick: () => {}
           },
           {
             id: 'email',
             children: 'Re: AWS partnership” — jeff@amazon.com',
             icon: 'CogIcon',
-            onClick: () => {
-            },
-          },
-        ],
-      },
+            onClick: () => {}
+          }
+        ]
+      }
     ],
     search
   )
@@ -162,7 +219,7 @@ interface NodeProps {
     >
       <CommandPalette.Page id="root">
         {filteredItems.length ? (
-          filteredItems.map((list :any) => (
+          filteredItems.map((list: any) => (
             <CommandPalette.List key={list.id} heading={list.heading}>
               {list.items.map(({ id, ...rest }: any) => (
                 <CommandPalette.ListItem
