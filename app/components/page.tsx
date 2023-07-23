@@ -16,17 +16,28 @@ export default function ComponentPage() {
         <SocialModal
           username="@therealkartik"
           followers={1234}
-          following={1234} socialAccountType={'Twitter'}        />
+          following={1234}
+          socialAccountType={'Twitter'}
+        />
 
-        <UserProfileCard profileImage={'https://pbs.twimg.com/profile_images/1085757468158742528/0jwhEGnX_400x400.jpg'} username={'therealkartik'} userAddress={'kartik.eth'}        />
+        <UserProfileCard
+          profileImage={
+            'https://pbs.twimg.com/profile_images/1085757468158742528/0jwhEGnX_400x400.jpg'
+          }
+          username={'therealkartik'}
+          userAddress={'kartik.eth'}
+        />
 
         <NotificationsCard />
 
-        <OtherProfile username={'kartik.eth'} numberOfConnections={1234}/>
-        <WalletInfo walletAddress={'kartik.eth'} totalBalance={1234} walletType={'Metamask'} nfts={[]} />
+        <OtherProfile username={'kartik.eth'} numberOfConnections={1234} />
+        <WalletInfo
+          walletAddress={'kartik.eth'}
+          totalBalance={1234}
+          walletType={'Metamask'}
+          nfts={[]}
+        />
       </div>
-
-
     </div>
   )
 }

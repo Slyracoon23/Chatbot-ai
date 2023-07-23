@@ -1,39 +1,47 @@
-import { BellRing, Check } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { BellRing, Check } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
+  CardTitle
+} from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { Switch } from '@/components/ui/switch'
 
 const notifications = [
   {
-    title: "Your call has been confirmed.",
-    description: "1 hour ago",
+    title: 'Your call has been confirmed.',
+    description: '1 hour ago'
   },
   {
-    title: "You have a new message!",
-    description: "1 hour ago",
+    title: 'You have a new message!',
+    description: '1 hour ago'
   },
   {
-    title: "Your subscription is expiring soon!",
-    description: "2 hours ago",
-  },
+    title: 'Your subscription is expiring soon!',
+    description: '2 hours ago'
+  }
 ]
 
 type CardProps = React.ComponentProps<typeof Card>
 
 export default function NotificationsCard({ className, ...props }: CardProps) {
   return (
-    <Card className={cn("bg-[rgba(255, 255, 0.04)] w-[205px] rounded-lg border border-[#2D2D2D]", className)} {...props}>
+    <Card
+      className={cn(
+        'bg-[rgba(255, 255, 0.04)] w-[205px] rounded-lg border border-[#2D2D2D]',
+        className
+      )}
+      {...props}
+    >
       <CardHeader className="flex-row items-center justify-between p-3">
-        <CardTitle className="text-sm font-medium text-gray-400">Notifications</CardTitle>
+        <CardTitle className="text-sm font-medium text-gray-400">
+          Notifications
+        </CardTitle>
         <Button className="h-2 w-16 bg-[#ABFD2C] text-xs text-[#171717]">
           Mark all as read
         </Button>

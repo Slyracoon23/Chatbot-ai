@@ -10,6 +10,7 @@ import { IDKitWidget } from '@worldcoin/idkit'
 import SismoConnect from '@/components/sismo-connect'
 import Worldcoin from '@/components/worldcoin'
 import { useLazyWriteCypher } from 'use-neo4j'
+import Web3ConnectButton from './web3connect-button'
 
 const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
@@ -248,7 +249,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
           },
           {
             id: 'walletconnect',
-            children: () => <ConnectButton />,
+            children: () => <Web3ConnectButton />,
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),
