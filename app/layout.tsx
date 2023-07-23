@@ -1,7 +1,6 @@
 import '@/app/globals.css'
 
 import { Metadata } from 'next'
-import { Toaster } from 'react-hot-toast'
 import { fontMono, fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
