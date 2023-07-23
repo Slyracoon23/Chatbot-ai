@@ -22,7 +22,6 @@ export const KGraph = ({
   const [edges, setEdges] = useState([])
   console.log(nodes)
   useEffect(() => {
-    // Update the nodes state when the nodesRecords changes
     if (nodesRecords) {
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
@@ -38,7 +37,6 @@ export const KGraph = ({
   }, [nodesRecords])
 
   useEffect(() => {
-    // Update the edges state when the edgesRecords changes
     if (edgesRecords) {
       const newEdges: any = edgesRecords.map((record: any) => {
         const relationship = record.get('r')

@@ -4,10 +4,10 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 import { useAtBottom } from '@/lib/hooks/use-at-bottom'
-import { Button, type ButtonProps } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { IconArrowDown } from '@/components/ui/icons'
 
-export function ButtonScrollToBottom({ className, ...props }: ButtonProps) {
+export function ButtonScrollToBottom({ className, ...props }: any) {
   const isAtBottom = useAtBottom()
 
   return (
@@ -19,12 +19,14 @@ export function ButtonScrollToBottom({ className, ...props }: ButtonProps) {
         isAtBottom ? 'opacity-0' : 'opacity-100',
         className
       )}
-      onClick={() =>
-        window.scrollTo({
-          top: document.body.offsetHeight,
-          behavior: 'smooth'
-        })
-      }
+      onClick={() => {
+        if (typeof window !== 'undefined') {
+          window.scrollTo({
+            top: document.body.offsetHeight,
+            behavior: 'smooth'
+          })
+        }
+      }}
       {...props}
     >
       <IconArrowDown />

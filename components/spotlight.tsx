@@ -1,4 +1,5 @@
 'use client'
+
 import 'react-cmdk-dark/dist/cmdk.css'
 import Image from 'next/image'
 import { useState, useCallback, useEffect, useRef } from 'react'
@@ -7,22 +8,16 @@ import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
 // @ts-ignore
 import { IDKitWidget } from '@worldcoin/idkit'
 import SismoConnect from '@/components/sismo-connect'
-import { ConnectButton } from '@/components/connect-button'
 import Worldcoin from '@/components/worldcoin'
 import { useLazyWriteCypher } from 'use-neo4j'
-
-interface NodeProps {
-  id: number
-  name: string
-  skills: string
-  email: string
-}
+import Web3ConnectButton from './web3connect-button'
 
 const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const worldcoinRef = useRef({ open: () => {} })
 
@@ -63,7 +58,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [
     runWorldcoinQuery,
     { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
-  ] = useLazyWriteCypher(cypherWorldcoin)
+  ] = useLazyWriteCypher(cypherWorldcoin) as any
 
   useEffect(() => {
     if (window.location.href?.includes('sismoConnectResponse')) {
@@ -132,13 +127,13 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
 
     // Run the Cypher query
     runWorldcoinQuery(worldcoinParams)
-      .then(res => {
+      .then((res: any) => {
         console.log(res)
         // Handle the result...
         runNodesQuery()
         runEdgesQuery()
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.error(err)
         // Handle the error...
       })
@@ -235,6 +230,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
               />
             ),
             onClick: () => {
+              // debugger
               worldcoinRef.current.open()
             }
           },
@@ -253,7 +249,7 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
           },
           {
             id: 'walletconnect',
-            children: <ConnectButton />,
+            children: () => <Web3ConnectButton />,
             icon: () => (
               <Image src="/icon-wc.svg" width="40" height="40" alt="twitter" />
             ),
