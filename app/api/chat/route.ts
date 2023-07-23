@@ -3,7 +3,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai'
 import { Configuration, OpenAIApi } from 'openai-edge'
 
 import { auth } from '@/auth'
-import { nanoid } from '@/lib/utils'
+// import { nanoid } from '@/lib/utils'
 
 export const runtime = 'edge'
 
