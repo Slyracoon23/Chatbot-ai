@@ -30,7 +30,8 @@ export const KGraph = ({
         return {
           id: node.identity.toString(),
           label: `${node.labels[0]}-${node.identity.toString()}`,
-          icon: `/icon-${node.labels[0]?.toLowerCase()}.svg`
+          icon: node.labels[0]?.toLowerCase() === 'user' ? '/kartek.png' : `/icon-${node.labels[0]?.toLowerCase()}.svg`
+
         }
       })
       setNodes(newNodes)
@@ -83,7 +84,7 @@ export const KGraph = ({
           <SphereWithIcon
             {...rest}
             node={node}
-            image={node.icon || '/kartek.png'}
+            image={node.icon}
           />
         )}
         contextMenu={({ data, onClose }) => <UserProfileCard className='' profileImage={"/kartek.png"} username={data.id}
