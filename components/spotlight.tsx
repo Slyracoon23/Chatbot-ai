@@ -1,18 +1,15 @@
 'use client'
 import 'react-cmdk-dark/dist/cmdk.css'
 import Image from 'next/image'
-import { useState, useCallback, useEffect,useRef} from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 // @ts-ignore
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk-dark'
+// @ts-ignore
+import { IDKitWidget } from '@worldcoin/idkit'
 import SismoConnect from '@/components/sismo-connect'
 import { ConnectButton } from '@/components/connect-button'
 import Worldcoin from '@/components/worldcoin'
-import { IDKitWidget } from '@worldcoin/idkit'
-import { createDriver } from 'use-neo4j'
-import { useWriteCypher } from 'use-neo4j'
-import { EOF } from 'dns'
 import { useLazyWriteCypher } from 'use-neo4j'
-// import { createNode } from '../services/neo4j'
 
 interface NodeProps {
   id: number
@@ -21,21 +18,18 @@ interface NodeProps {
   email: string
 }
 
-const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
+const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   const [page, setPage] = useState<'root' | 'projects'>('root')
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState<boolean>(true)
   const [worldcoinModalOpen, setWorldcoinModalOpen] = useState(false)
 
+  const worldcoinRef = useRef({ open: () => {} })
 
-
-  const worldcoinRef = useRef({ open: () => {} });
-
-
-  const widgetChildren = useCallback(({ open }:any) => {
-    worldcoinRef.current.open = open;
-    return null; // Here you are returning null, you could also return a React element if needed.
-  }, []);
+  const widgetChildren = useCallback(({ open }: any) => {
+    worldcoinRef.current.open = open
+    return null // Here you are returning null, you could also return a React element if needed.
+  }, [])
 
   // useEffect(() => {
   //   if (worldcoinModalOpen) {
@@ -43,21 +37,36 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
   //   }
   // }, [worldcoinModalOpen]);
 
-  const handleWorldcoinSuccess = (data:any) => {
+  const handleWorldcoinSuccess = (data: any) => {
     console.log(data)
     // handle successful Worldcoin verification here
     setWorldcoinModalOpen(false)
+
+    handleWorldcoinSubmit()
   }
 
-  const handleWorldcoinVerify = (data:any) => {
-    console.log(data)
+  const handleWorldcoinVerify = (data: any) => {
+    console.log('Proof received:', data)
     // handle Worldcoin proof receipt here
+    // Define Cypher query for connecting user with Worldcoin entity
+
+    handleWorldcoinSubmit()
   }
 
+  const cypherWorldcoin = `
+  CREATE (u:User {id: $userId})
+  CREATE (w:Worldcoin {id: $worldcoinId})
+  CREATE (u)-[:CONNECTS]->(w)
+  `
 
+  // Initialize the hook with the cypher query.
+  const [
+    runWorldcoinQuery,
+    { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
+  ] = useLazyWriteCypher(cypherWorldcoin)
 
   useEffect(() => {
-    if (window.location.href?.includes('sismoConnectResponse')){
+    if (window.location.href?.includes('sismoConnectResponse')) {
       setSearch('sismo')
       setIsOpen(true)
     }
@@ -97,9 +106,32 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
         // Handle the error...
       })
   }
-  const handleSismoSubmit = (params:any) => {
+  const handleSismoSubmit = (params: any) => {
     // Run the query.
     runQuerySismo(params)
+      .then(res => {
+        console.log(res)
+        // Handle the result...
+        runNodesQuery()
+        runEdgesQuery()
+      })
+      .catch(err => {
+        console.error(err)
+        // Handle the error...
+      })
+  }
+
+  const handleWorldcoinSubmit = () => {
+    // Define Cypher query for connecting user with Worldcoin entity
+
+    // Define parameters for the Cypher query
+    const worldcoinParams = {
+      userId: 'Earl', // replace this with the actual user ID
+      worldcoinId: 1 // replace this with the actual Worldcoin ID
+    }
+
+    // Run the Cypher query
+    runWorldcoinQuery(worldcoinParams)
       .then(res => {
         console.log(res)
         // Handle the result...
@@ -203,9 +235,21 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
               />
             ),
             onClick: () => {
-              debugger
-              worldcoinRef.current.open();
+              worldcoinRef.current.open()
             }
+          },
+          {
+            id: 'worldcoin',
+            children: 'Connect to Worldcoin',
+            icon: () => (
+              <Image
+                src="/icon-worldcoin.svg"
+                width="40"
+                height="40"
+                alt="worldcoin"
+              />
+            ),
+            onClick: () => {}
           },
           {
             id: 'walletconnect',
@@ -255,9 +299,15 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
         id: 'commands',
         items: [
           {
-            id: "sismo",
+            id: 'sismo',
             keywords: ['Prove with Sismo'],
-            children: <SismoConnect setSearch={setSearch} setIsOpen={setIsOpen} handleSubmit={handleSismoSubmit} />,
+            children: (
+              <SismoConnect
+                setSearch={setSearch}
+                setIsOpen={setIsOpen}
+                handleSubmit={handleSismoSubmit}
+              />
+            ),
             icon: () => (
               <Image
                 src="/icon-sismo.svg"
@@ -313,22 +363,20 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }:any) => {
         </CommandPalette.Page>
       </CommandPalette>
       <Worldcoin />
-        <IDKitWidget
-          ref={worldcoinRef}
-          app_id="app_ae12796fe25aa0e49f21304075b405a4"
-          action="monstor-proof"
-          onSuccess={handleWorldcoinSuccess}
-          handleVerify={handleWorldcoinVerify}
-          //@ts-ignore
-          credential_types={['orb', 'phone']}
-          enableTelemetry
-        >
+      <IDKitWidget
+        ref={worldcoinRef}
+        app_id="app_ae12796fe25aa0e49f21304075b405a4"
+        action="monstor-proof"
+        onSuccess={handleWorldcoinSuccess}
+        handleVerify={handleWorldcoinVerify}
+        //@ts-ignore
+        credential_types={['orb', 'phone']}
+        enableTelemetry
+      >
         {widgetChildren as any}
-
-        </IDKitWidget>
+      </IDKitWidget>
     </>
   )
 }
-
 
 export default Spotlight

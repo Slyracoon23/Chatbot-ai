@@ -1,14 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { nanoid } from '@/lib/utils'
 import Spotlight from '@/components/spotlight'
 import { KGraph } from '@/components/kgraph'
 import { useReadCypher } from 'use-neo4j'
-import { truncate } from 'fs'
+
+export const runtime = 'edge'
 
 export default function IndexPage() {
-  const id = nanoid()
   const [clicked, setClicked] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -28,7 +27,7 @@ export default function IndexPage() {
     // Run once when the component mounts
     runNodesQuery()
     runEdgesQuery()
-  }, [])
+  }, [runNodesQuery, runEdgesQuery])
 
   const LandingPage = () => {
     const handleInputClick = () => {

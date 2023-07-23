@@ -4,19 +4,18 @@ import {
   darkTheme,
   GraphCanvas,
   GraphCanvasRef,
-  GraphEdge,
-  GraphNode,
   useSelection,
-  RadialMenu,
-  SphereWithSvg,
-  Svg,
   SphereWithIcon
 } from 'reagraph'
-import { useReadCypher } from 'use-neo4j'
 
-import { CardDemo} from '@/components/card-kgraph';
+import { CardDemo } from '@/components/card-kgraph'
 
-export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }:any) => {
+export const KGraph = ({
+  nodesLoading,
+  nodesRecords,
+  edgesLoading,
+  edgesRecords
+}: any) => {
   const graphRef = useRef<GraphCanvasRef | null>(null)
 
   const [nodes, setNodes] = useState([])
@@ -28,7 +27,11 @@ export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }
       const newNodes: any = nodesRecords.map((record: any) => {
         const node = record.get('n')
         console.log(node)
-        return { id: node.identity.toString(), label: `${node.labels[0]}-${node.identity.toString()}`, icon: `/icon-${node.labels[0]?.toLowerCase()}.svg` }
+        return {
+          id: node.identity.toString(),
+          label: `${node.labels[0]}-${node.identity.toString()}`,
+          icon: `/icon-${node.labels[0]?.toLowerCase()}.svg`
+        }
       })
       setNodes(newNodes)
     }
@@ -78,11 +81,13 @@ export const KGraph = ({nodesLoading, nodesRecords, edgesLoading, edgesRecords }
         onNodeClick={onNodeClick}
         // cameraMode="rotate"
         renderNode={({ node, ...rest }) => (
-          <SphereWithIcon {...rest} node={node} image={node.icon || '/kartek.png'} />
+          <SphereWithIcon
+            {...rest}
+            node={node}
+            image={node.icon || '/kartek.png'}
+          />
         )}
-        contextMenu={({ data, onClose }) => (
-          <CardDemo/>
-        )}
+        contextMenu={({ data, onClose }) => <CardDemo />}
       />
     </div>
   )
