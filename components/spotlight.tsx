@@ -70,6 +70,8 @@ const Spotlight = ({ runNodesQuery, runEdgesQuery }: any) => {
   // Initialize the hook with the cypher query.
   const [
     runWorldcoinQuery,
+
+    //@ts-ignore
     { loadingWorldcoin, errorWorldcoin, firstWorldcoin }
   ] = useLazyWriteCypher(cypherWorldcoin)
 
