@@ -3,8 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 
 import { auth } from '@/auth'
 import { getChat } from '@/app/actions'
-import { KGraph } from '@/components/kgraph'
-
+import { CardDemo } from '@/components/card-kgraph'
 export interface KGraphPageProps {
   params: {
     id: string
@@ -12,5 +11,5 @@ export interface KGraphPageProps {
 }
 
 export default async function KGraphPage({ params }: KGraphPageProps) {
-  return <KGraph />
+  return <CardDemo />
 }
