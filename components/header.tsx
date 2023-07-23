@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { ThemeToggle } from '@/components/theme-toggle'
 import Web3ConnectButton from './web3connect-button'
-import { ClearHistory } from '@/components/clear-history'
 import { UserMenu } from '@/components/user-menu'
 import { LoginButton } from '@/components/login-button'
 import { ConnectButton } from './connect-button'
