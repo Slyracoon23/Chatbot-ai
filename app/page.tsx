@@ -32,10 +32,10 @@ export default function IndexPage() {
     <div className="flex-row justify-around align-middle">
       <Spotlight runNodesQuery={runNodesQuery} runEdgesQuery={runEdgesQuery} />
       <KGraph
-        nodesLoading={nodesLoading}
-        nodesRecords={nodesRecords}
-        edgesRecords={edgesRecords}
-        edgesLoading={edgesLoading}
+      // nodesLoading={nodesLoading}
+      // nodesRecords={nodesRecords}
+      // edgesRecords={edgesRecords}
+      // edgesLoading={edgesLoading}
       />
       <ConnectButton />
     </div>

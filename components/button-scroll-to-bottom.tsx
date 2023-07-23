@@ -19,12 +19,14 @@ export function ButtonScrollToBottom({ className, ...props }: any) {
         isAtBottom ? 'opacity-0' : 'opacity-100',
         className
       )}
-      onClick={() =>
-        window.scrollTo({
-          top: document.body.offsetHeight,
-          behavior: 'smooth'
-        })
-      }
+      onClick={() => {
+        if (typeof window !== 'undefined') {
+          window.scrollTo({
+            top: document.body.offsetHeight,
+            behavior: 'smooth'
+          })
+        }
+      }}
       {...props}
     >
       <IconArrowDown />

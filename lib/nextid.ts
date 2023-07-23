@@ -87,17 +87,17 @@ export async function connectWithWeaveDB(contractTxId: any) {
   console.log('pretend to connect with arweave sdk')
 }
 
-export async function getPubKey(identity) {
-  // const signer = await new BrowserProvider(window.ethereum).getSigner()
-  // const addr = await signer.getAddress()
+export async function getPubKey(identity: any) {
+  const signer = '0x' // await new BrowserProvider(window.ethereum).getSigner()
+  const addr = '0x' // await signer.getAddress()
   // const message = `NextID\nPlatform: twitter\nIdentity: ${identity}\nTimestamp: ${Date.now()}\nWallet Address: ${addr}`
   // const pubKey = SigningKey.recoverPublicKey(
   //   getBytes(hashMessage(message)),
   //   await signer.signMessage(message)
   // )
   // const compressed = publicKey.compress(pubKey.slice(2))
-  // const public_key = `0x${compressed}`
-  // return { public_key, addr, signer }
+  const public_key = '0x' //`0x${compressed}`
+  return { public_key, addr, signer }
 }
 
 export async function isOwner(identity: any, public_key: any) {
@@ -120,14 +120,14 @@ export async function isOwner(identity: any, public_key: any) {
 }
 
 export async function signPayload(identity: any, public_key: any, signer: any) {
-  const res = await fetch("https://proof-service.next.id/v1/proof/payload", {
-    method: "POST",
+  const res = await fetch('https://proof-service.next.id/v1/proof/payload', {
+    method: 'POST',
     body: JSON.stringify({
-      action: "create",
-      platform: "twitter",
+      action: 'create',
+      platform: 'twitter',
       identity,
-      public_key,
-    }),
+      public_key
+    })
   }).then(v => v.json())
   // const sig = await signer.signMessage(res.sign_payload)
   // const base64 = Buffer.from(sig.slice(2), "hex").toString("base64")
@@ -135,12 +135,12 @@ export async function signPayload(identity: any, public_key: any, signer: any) {
   //   .split("\n")
   //   .map((v: any) => v.replace("%SIG_BASE64%", base64))
   //   .join("\n")
-  // return {
-  //   signature: base64,
-  //   uuid: res.uuid,
-  //   created_at: res.created_at,
-  //   tweet,
-  // }
+  return {
+    signature: '', // base64,
+    uuid: '', //res.uuid,
+    created_at: '', // res.created_at,
+    tweet: ''
+  }
 }
 
 export async function verifyProof(statusID: any, nextID: any) {
